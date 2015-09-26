@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.android.app.slides.Utilities.Utilities;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by francisco on 23/9/15.
  */
@@ -19,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
+        ButterKnife.bind(this);
 
         loadToolbar();
         checkInternetConnection();

@@ -1,8 +1,10 @@
-package com.android.app.slides;
+package com.android.app.slides.activities;
 
 import android.os.Bundle;
 
-public class Register extends BaseActivity{
+import com.android.app.slides.R;
+
+public class Register extends BaseActivity {
 
 
     @Override

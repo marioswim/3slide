@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">3Slides</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
 </resources>

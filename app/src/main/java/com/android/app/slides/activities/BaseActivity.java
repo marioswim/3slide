@@ -1,11 +1,11 @@
-package com.android.app.slides;
+package com.android.app.slides.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.app.slides.R;
 import com.android.app.slides.Utilities.Utilities;
 
 import butterknife.ButterKnife;

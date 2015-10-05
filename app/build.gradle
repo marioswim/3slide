@@ -25,6 +25,7 @@ android {
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -34,4 +35,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
+    compile 'com.github.mrengineer13:snackbar:1.2.0'
+    compile('com.afollestad.material-dialogs:core:0.8.1.0@aar') {
+        transitive = true
+    }
 }

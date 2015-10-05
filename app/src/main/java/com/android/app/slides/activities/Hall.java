@@ -26,6 +26,8 @@ public class Hall extends BaseActivity {
         if(Utilities.loadUser(this)!=null){
             enterLayout.setVisibility(View.GONE);
             Intent i = new Intent(Hall.this, Home.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         }else{
             enterLayout.setVisibility(View.VISIBLE);

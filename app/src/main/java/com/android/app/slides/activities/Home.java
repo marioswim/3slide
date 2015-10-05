@@ -1,13 +1,22 @@
 package com.android.app.slides.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.app.slides.R;
 import com.android.app.slides.adapters.OptionsAdapter;
+import com.android.app.slides.services.LocationReceiver;
+import com.android.app.slides.services.LocationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +33,20 @@ public class Home extends BaseActivity {
     private OptionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    LocationReceiver myReceiver;
+    IntentFilter intentFilter;
+    Intent locationService;
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.home;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLayoutManager = new GridLayoutManager(this, 4);
+        mLayoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
@@ -50,19 +67,40 @@ public class Home extends BaseActivity {
                         //intent = new Intent(ActivityMain.this, ActivityProblems.class);
                         //startActivity(intent);
                         break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+                        intent = new Intent(Home.this, Preferences.class);
+                        startActivity(intent);
+                        break;
                 }
             }
         });
 
 
         mRecyclerView.setAdapter(mAdapter);
+
+        locationService = new Intent(this, LocationService.class);
+        startService(locationService);
+        myReceiver = new LocationReceiver();
+        intentFilter = new IntentFilter("New Location");
+
+
     }
 
-
-
     @Override
-    protected int getLayoutResource() {
-        return R.layout.home;
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(myReceiver, intentFilter);
+
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(myReceiver);
+        stopService(locationService);
     }
 
     private List<String> initializeTitles(){
@@ -77,6 +115,7 @@ public class Home extends BaseActivity {
 
     private List<Integer> initializeImages(){
         List<Integer> images = new ArrayList<>();
+        images.add(R.mipmap.ic_launcher);
         images.add(R.mipmap.ic_launcher);
         images.add(R.mipmap.ic_launcher);
         images.add(R.mipmap.ic_launcher);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="prefs"
+        android:title="Mis preferencias" >
+
+        <Preference
+            android:key="pref_location"
+            android:title="Ubicacion en segundo plano"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

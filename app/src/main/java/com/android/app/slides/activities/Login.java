@@ -1,14 +1,16 @@
 package com.android.app.slides.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.app.slides.R;
+import com.android.app.slides.Utilities.Utilities;
+import com.android.app.slides.model.User;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 
@@ -29,6 +31,21 @@ public class Login extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         checkFields();
+
+        sign_in_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                User user = new User();
+                user.setName("Fran");
+                Utilities.saveUser(Login.this, user);
+
+                Intent i = new Intent(Login.this, Home.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        });
 
     }
 

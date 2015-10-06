@@ -6,25 +6,35 @@
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
+    <ScrollView android:id="@+id/recover_form" android:layout_width="match_parent"
         android:layout_height="match_parent" android:layout_below="@+id/toolbar"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
 
-            <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
+            <LinearLayout android:id="@+id/email_recover_form" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="Si no recuerda su contraseña, introduzca su dirección de email y nos pondremos en contacto con usted para recuperarla"/>
 
                 <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:hint="@string/email"
                     android:inputType="textEmailAddress" android:maxLines="1"
                     android:singleLine="true" />
 
-                <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:id="@+id/recoverBtn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/accent"
+                    android:text="Recuperar contraseña" />
 
             </LinearLayout>
     </ScrollView>

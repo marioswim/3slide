@@ -47,6 +47,14 @@ public class Login extends BaseActivity {
             }
         });
 
+        forgotten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, Recover.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void checkFields(){

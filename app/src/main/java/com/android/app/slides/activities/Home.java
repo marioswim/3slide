@@ -82,10 +82,7 @@ public class Home extends BaseActivity {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        locationService = new Intent(this, LocationService.class);
-        startService(locationService);
-        myReceiver = new LocationReceiver();
-        intentFilter = new IntentFilter("New Location");
+        initializeLocation();
 
 
     }
@@ -93,14 +90,13 @@ public class Home extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(myReceiver, intentFilter);
+        startLocationHandler();
 
     }
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(myReceiver);
-        stopService(locationService);
+        stopLocationHandler();
     }
 
     private List<String> initializeTitles(){
@@ -121,5 +117,21 @@ public class Home extends BaseActivity {
         images.add(R.mipmap.ic_launcher);
 
         return images;
+    }
+
+    private void initializeLocation(){
+        locationService = new Intent(this, LocationService.class);
+        startService(locationService);
+        myReceiver = new LocationReceiver();
+        intentFilter = new IntentFilter("New Location");
+    }
+
+    private void startLocationHandler(){
+        registerReceiver(myReceiver, intentFilter);
+    }
+
+    private void stopLocationHandler(){
+        unregisterReceiver(myReceiver);
+        stopService(locationService);
     }
 }

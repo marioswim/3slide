@@ -17,6 +17,11 @@ public class User {
     public User() {
     }
 
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
+    }
+
     public User(String name, String sector, String phone, String website, String email, String description, String image_url, String apikey) {
         this.name = name;
         this.sector = sector;

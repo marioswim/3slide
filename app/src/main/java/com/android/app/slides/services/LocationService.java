@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.app.slides.activities.Home;
+import com.android.app.slides.tools.Configurations;
 import com.android.app.slides.tools.Constants;
 
 /**
@@ -38,9 +39,7 @@ public class LocationService extends Service
     {
         super.onCreate();
 
-        //TODO: ELIMINAR Y OBTENER DE LAS PREFERENCIAS
-        mode = 1;
-
+        mode = Configurations.loadLocationMode(this);
 
         myReceiver = new LocationReceiver();
         if(mode == Constants.SERVICE_MODE_ONCE){

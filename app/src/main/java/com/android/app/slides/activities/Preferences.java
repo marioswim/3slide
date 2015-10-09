@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.app.slides.R;
+import com.android.app.slides.tools.Configurations;
+import com.android.app.slides.tools.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,15 @@ public class Preferences extends PreferenceActivity {
         location = getPreferenceManager().findPreference("pref_location");
 
         if (location != null) {
-            location.setSummary("No");
+
+            switch (Configurations.getLocationModeId(Preferences.this)){
+                case 0:
+                    location.setSummary("Yes");
+                    break;
+                case 1:
+                    location.setSummary("No");
+                    break;
+            }
 
             location.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -40,13 +50,24 @@ public class Preferences extends PreferenceActivity {
                             .title("Location")
                             .items(options.toArray(new String[options.size()]))
                             .alwaysCallSingleChoiceCallback()
-                            .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                            .itemsCallbackSingleChoice(Configurations.getLocationModeId(Preferences.this), new MaterialDialog.ListCallbackSingleChoice() {
                                 @Override
                                 public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                                     /**
                                      * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
                                      * returning false here won't allow the newly selected radio button to actually be selected.
                                      **/
+
+                                    switch (which) {
+                                        case 0:
+                                            Configurations.saveLocationMode(Constants.SERVICE_MODE_FOREVER, Preferences.this);
+                                            reloadSummary("Yes", location);
+                                            break;
+                                        case 1:
+                                            Configurations.saveLocationMode(Constants.SERVICE_MODE_ONCE, Preferences.this);
+                                            reloadSummary("No", location);
+                                            break;
+                                    }
                                     return true;
                                 }
                             })
@@ -54,6 +75,12 @@ public class Preferences extends PreferenceActivity {
                     return false;
                 }
             });
+        }
+    }
+
+    public void reloadSummary(String summary, Preference preference){
+        if (preference != null) {
+            preference.setSummary(summary);
         }
     }
 }

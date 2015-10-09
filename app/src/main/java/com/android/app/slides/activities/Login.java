@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.android.app.slides.R;
+import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.tools.Utilities;
 import com.android.app.slides.model.User;
 import com.gc.materialdesign.views.ButtonFlat;
@@ -36,7 +37,8 @@ public class Login extends BaseActivity {
                 if(Utilities.isEmailValid(email.getText().toString())){
                     User user = new User();
                     user.setName("Fran");
-                    Utilities.saveUser(Login.this, user);
+                    DAOUser daoUser = new DAOUser(Login.this);
+                    daoUser.saveUser(user);
 
                     Intent i = new Intent(Login.this, Home.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

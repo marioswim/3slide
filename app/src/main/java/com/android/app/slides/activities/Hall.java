@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.app.slides.R;
+import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.tools.Utilities;
 import com.gc.materialdesign.views.ButtonRectangle;
 
@@ -22,7 +23,9 @@ public class Hall extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(Utilities.loadUser(this)!=null){
+        DAOUser daoUser = new DAOUser(this);
+
+        if(daoUser.loadUser()!=null){
             enterLayout.setVisibility(View.GONE);
             Intent i = new Intent(Hall.this, Home.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

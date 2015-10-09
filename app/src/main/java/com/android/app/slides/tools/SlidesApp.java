@@ -1,4 +1,4 @@
-package com.android.app.slides.Utilities;
+package com.android.app.slides.tools;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package com.android.app.slides.Utilities;
+package com.android.app.slides.tools;
 
 import android.app.Activity;
 import android.content.Context;
@@ -89,5 +89,9 @@ public class Utilities {
             }
         }
         return false;
+    }
+
+    public static boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

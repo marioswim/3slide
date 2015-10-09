@@ -22,14 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hi"
-            android:id="@+id/ghost"/>
-
         <android.support.v7.widget.RecyclerView
-            android:layout_below="@+id/ghost"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/optionList"

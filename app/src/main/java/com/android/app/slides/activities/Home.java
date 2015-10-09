@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.android.app.slides.R;
 import com.android.app.slides.adapters.OptionsAdapter;
-import com.android.app.slides.services.LocationReceiver;
 import com.android.app.slides.services.LocationService;
 
 import java.util.ArrayList;
@@ -32,10 +31,6 @@ public class Home extends BaseActivity {
 
     private OptionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    LocationReceiver myReceiver;
-    IntentFilter intentFilter;
-    Intent locationService;
 
     @Override
     protected int getLayoutResource() {
@@ -90,23 +85,25 @@ public class Home extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startLocationHandler();
+        //startLocationHandler();
 
     }
     @Override
     protected void onPause() {
         super.onPause();
-        stopLocationHandler();
+        //stopLocationHandler();
     }
 
     private List<String> initializeTitles(){
         List<String> titles = new ArrayList<>();
         titles.add("Búsqueda");
         titles.add("Mi cuenta");
-        titles.add("Grupos");
+        titles.add("Contactos");
         titles.add("Configuración");
 
         return titles;
+
+
     }
 
     private List<Integer> initializeImages(){
@@ -120,18 +117,7 @@ public class Home extends BaseActivity {
     }
 
     private void initializeLocation(){
-        locationService = new Intent(this, LocationService.class);
+        Intent locationService = new Intent(this, LocationService.class);
         startService(locationService);
-        myReceiver = new LocationReceiver();
-        intentFilter = new IntentFilter("New Location");
-    }
-
-    private void startLocationHandler(){
-        registerReceiver(myReceiver, intentFilter);
-    }
-
-    private void stopLocationHandler(){
-        unregisterReceiver(myReceiver);
-        stopService(locationService);
     }
 }

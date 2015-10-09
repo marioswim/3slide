@@ -28,6 +28,7 @@
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/loginBtn"
                 android:layout_width="0dp"
+                style="?android:textAppearanceSmall"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/accent"
@@ -36,6 +37,7 @@
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/registerBtn"
                 android:layout_width="0dp"
+                style="?android:textAppearanceSmall"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/accent"

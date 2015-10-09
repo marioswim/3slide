@@ -25,31 +25,56 @@
         <activity
             android:name=".activities.Login"
             android:label="Iniciar Sesion"
+            android:parentActivityName=".activities.Hall"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Hall" />
         </activity>
 
         <activity
             android:name=".activities.Register"
             android:label="Registrarse"
+            android:parentActivityName=".activities.Hall"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Hall" />
         </activity>
 
         <activity
             android:name=".activities.Home"
             android:label="@string/app_name"
+            android:parentActivityName=".activities.Hall"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Hall" />
         </activity>
 
         <activity
             android:name=".activities.Preferences"
             android:label="Preferencias"
+            android:parentActivityName=".activities.Home"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Home" />
         </activity>
 
         <activity
             android:name=".activities.Recover"
             android:label="Recuperar contraseña"
+            android:parentActivityName=".activities.Register"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Register" />
         </activity>
 
         <service android:name=".services.LocationService"/>

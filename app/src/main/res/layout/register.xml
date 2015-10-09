@@ -61,6 +61,28 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/termsCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acepto los "/>
+
+                <TextView
+                    android:id="@+id/termsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="términos de usuario"
+                    android:layout_toRightOf="@+id/termsCheckBox"
+                    android:layout_alignBaseline="@+id/termsCheckBox"/>
+
+            </RelativeLayout>
+
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/registerBtn"
                 style="?android:textAppearanceSmall"

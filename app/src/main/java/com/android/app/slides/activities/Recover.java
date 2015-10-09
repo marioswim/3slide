@@ -3,10 +3,12 @@ package com.android.app.slides.activities;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.android.app.slides.R;
+import com.android.app.slides.tools.Utilities;
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import butterknife.Bind;
@@ -25,6 +27,17 @@ public class Recover extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         checkFields();
+
+        recoverBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Utilities.isEmailValid(email.getText().toString())){
+
+                }else{
+                    email.setError("Email no válido");
+                }
+            }
+        });
     }
 
 

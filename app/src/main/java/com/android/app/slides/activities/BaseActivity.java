@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.android.app.slides.R;
-import com.android.app.slides.Utilities.Utilities;
+import com.android.app.slides.tools.Utilities;
 
 import butterknife.ButterKnife;
 

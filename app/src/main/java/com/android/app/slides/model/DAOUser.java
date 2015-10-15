@@ -1,6 +1,5 @@
 package com.android.app.slides.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 

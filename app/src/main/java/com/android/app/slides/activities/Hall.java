@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOUser;
-import com.android.app.slides.tools.Utilities;
 import com.gc.materialdesign.views.ButtonRectangle;
 
 import butterknife.Bind;

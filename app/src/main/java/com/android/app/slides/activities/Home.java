@@ -1,21 +1,18 @@
 package com.android.app.slides.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.app.slides.R;
 import com.android.app.slides.adapters.OptionsAdapter;
+import com.android.app.slides.model.DAOUser;
+import com.android.app.slides.model.User;
 import com.android.app.slides.services.LocationService;
+import com.android.app.slides.tools.ToastManager;
+import com.android.app.slides.tools.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +51,9 @@ public class Home extends BaseActivity {
                 Intent intent;
                 switch (position) {
                     case 0:
-                        //intent = new Intent(ActivityMain.this, Principal.class);
-                        //startActivity(intent);
                         break;
 
                     case 1:
-                        //intent = new Intent(ActivityMain.this, ActivityProblems.class);
-                        //startActivity(intent);
                         break;
 
                     case 2:
@@ -76,8 +69,12 @@ public class Home extends BaseActivity {
 
 
         mRecyclerView.setAdapter(mAdapter);
+        
+        if(!Utilities.isMyServiceRunning(getApplicationContext())){
+            initializeLocation();
+        }
 
-        initializeLocation();
+        welcomeBackMsg();
 
 
     }
@@ -85,13 +82,11 @@ public class Home extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //startLocationHandler();
 
     }
     @Override
     protected void onPause() {
         super.onPause();
-        //stopLocationHandler();
     }
 
     private List<String> initializeTitles(){
@@ -102,8 +97,6 @@ public class Home extends BaseActivity {
         titles.add("Configuración");
 
         return titles;
-
-
     }
 
     private List<Integer> initializeImages(){
@@ -119,5 +112,12 @@ public class Home extends BaseActivity {
     private void initializeLocation(){
         Intent locationService = new Intent(this, LocationService.class);
         startService(locationService);
+    }
+
+    private void welcomeBackMsg(){
+        DAOUser daoUser = new DAOUser(getApplicationContext());
+        User user = daoUser.loadUser();
+
+        ToastManager.showToast(Home.this, "Bienvenido " + user.getName());
     }
 }

@@ -10,10 +10,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.android.app.slides.activities.Home;
 import com.android.app.slides.tools.Configurations;
 import com.android.app.slides.tools.Constants;
 
@@ -56,19 +54,26 @@ public class LocationService extends Service
     @Override
     public void onStart(Intent intent, int startId)
     {
+        boolean go = false;
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listener = new MyLocationListener(this, mode);
 
         try{
             if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)){
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, listener);
+                go = true;
             }else{
                 listener.onProviderDisabled("Network GPS");
             }
             if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)){
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, listener);
+                go = true;
             }else{
                 listener.onProviderDisabled("GPS");
+            }
+
+            if(!go){
+                this.stopSelf();
             }
         }catch (SecurityException e){
 

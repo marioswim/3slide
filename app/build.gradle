@@ -39,4 +39,5 @@ dependencies {
     compile('com.afollestad.material-dialogs:core:0.8.1.0@aar') {
         transitive = true
     }
+    compile 'com.mcxiaoke.volley:library:1.0.19'
 }

@@ -11,7 +11,6 @@ import com.android.app.slides.tools.Configurations;
 import com.android.app.slides.tools.Constants;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by francisco on 5/10/15.

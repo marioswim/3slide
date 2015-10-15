@@ -4,18 +4,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.app.slides.R;
+import com.android.app.slides.model.DAOUser;
+import com.android.app.slides.model.User;
+import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.DialogManager;
+import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
-import com.gc.materialdesign.views.ButtonFlat;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -34,6 +51,12 @@ public class Register extends BaseActivity {
     CheckBox termsCheckBox;
     @Bind(R.id.termsText)
     TextView termsText;
+    @Bind(R.id.registerProgress)
+    ProgressBarCircularIndeterminate registerProgress;
+
+    private RequestQueue requestQueue;
+    public static String TAG = "Register";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +67,7 @@ public class Register extends BaseActivity {
         termsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogManager.showDialog(Register.this, "Términos de usuario", "1- Blabla");
+                DialogManager.showDialog(Register.this, "Términos de usuario", "1- Blabla\n2- CLacla");
             }
         });
 
@@ -62,10 +85,7 @@ public class Register extends BaseActivity {
                 }
 
                 if(go){
-                    Intent i = new Intent(Register.this, Home.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);
+                    registerServer();
                 }
             }
         });
@@ -124,6 +144,111 @@ public class Register extends BaseActivity {
         }else{
             return false;
         }
+    }
+
+    private void registerServer(){
+
+        registerProgress.setVisibility(View.VISIBLE);
+
+        Utilities.hideKeyboard(Register.this);
+
+        StringRequest request = new StringRequest(Request.Method.POST, Constants.baseUrl + Constants.registerURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+
+                            if(jsonResponse != null){
+                                User user = parseRegister(jsonResponse);
+
+                                if (user != null) {
+                                    DAOUser daoUser = new DAOUser(Register.this);
+                                    daoUser.saveUser(user);
+
+                                    Intent i = new Intent(Register.this, Home.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(i);
+                                }
+                            }else{
+                                ToastManager.showToast(Register.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        registerProgress.setVisibility(View.INVISIBLE);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null) {
+                            if (networkResponse.statusCode == 500){
+                                try {
+                                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                                    JSONObject jsonObject = new JSONObject(responseBody);
+                                    if (jsonObject!=null){
+                                        int errorNo = jsonObject.getInt("errno");
+                                        ToastManager.showToast(Register.this, Utilities.getErrorMsgById(errorNo));
+                                    }
+
+                                } catch (JSONException | UnsupportedEncodingException e) {
+                                    ToastManager.showToast(Register.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
+                                }
+                            }else{
+                                ToastManager.showToast(Register.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
+                            }
+                        }
+
+                        registerProgress.setVisibility(View.INVISIBLE);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                params.put("email", email.getText().toString());
+                params.put("pass", password.getText().toString());
+                return params;
+            }
+        };
+
+        // Añadir petición a la cola
+        requestQueue.add(request);
+
+    }
+
+    private User parseRegister(JSONObject jsonObject){
+
+        String apikey;
+        User user = null;
+
+        try {
+
+            user = new User();
+
+            apikey = jsonObject.getString("apikey");
+            if (apikey != null) {
+                user.setApikey(apikey);
+            }
+
+            user.setEmail(email.getText().toString());
+            user.setName(name.getText().toString());
+
+        }catch (JSONException e){
+            Log.e(TAG, "Error de parsing: " + e.getMessage());
+        }
+
+        return user;
+
     }
 }
 

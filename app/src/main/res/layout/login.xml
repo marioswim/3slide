@@ -43,6 +43,15 @@
                     android:background="@color/accent"
                     android:text="He olvidado mi contraseña" />
 
+                <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+                    android:id="@+id/loginProgress"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="invisible"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/accent" />
+
             </LinearLayout>
     </ScrollView>
 

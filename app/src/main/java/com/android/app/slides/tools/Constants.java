@@ -6,6 +6,9 @@ package com.android.app.slides.tools;
 public class Constants {
 
     public static String baseUrl = "http://triunfalia.com";
+    public static String loginURL = "/login";
+    public static String registerURL = "/signup";
+
     public static String PREFS_NAME = "3slidesPrefs";
     public static final int SERVICE_MODE_ONCE = 1;
     public static final int SERVICE_MODE_FOREVER = 2;

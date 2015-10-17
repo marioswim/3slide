@@ -10,10 +10,31 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.android.app.slides.activities.Home;
+import com.android.app.slides.model.DAOUser;
+import com.android.app.slides.model.User;
 import com.android.app.slides.tools.Configurations;
 import com.android.app.slides.tools.Constants;
+import com.android.app.slides.tools.ToastManager;
+import com.android.app.slides.tools.Utilities;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by francisco on 4/10/15.
@@ -222,12 +243,19 @@ public class LocationService extends Service
 
     public static class LocationReceiver extends BroadcastReceiver {
 
+        private RequestQueue requestQueue;
+        Double latitude, longitude;
+
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Double latitude = intent.getDoubleExtra("Latitude", 0);
-            Double longitude = intent.getDoubleExtra("Longitude", 0);
+            latitude = intent.getDoubleExtra("Latitude", 0);
+            longitude = intent.getDoubleExtra("Longitude", 0);
             String provider = intent.getStringExtra("Provider");
+
+            requestQueue = Volley.newRequestQueue(context);
+
+            updateLocationServer(context);
 
             Toast.makeText(context, provider + latitude + longitude, Toast.LENGTH_LONG).show();
 
@@ -237,6 +265,39 @@ public class LocationService extends Service
             }else if (mode == Constants.SERVICE_MODE_FOREVER){
                 reInitializeBroadcastReceiver(context);
             }
+        }
+
+        private void updateLocationServer(final Context context){
+
+            StringRequest request = new StringRequest(Request.Method.POST, Constants.baseUrl + Constants.updateLocationURL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    // the POST parameters:
+                    // TODO: 17/10/15 Mandar el apikey si finalmente es necesario
+                    DAOUser daoUser = new DAOUser(context);
+                    User user = daoUser.loadUser();
+
+                    params.put("latitud", latitude.toString());
+                    params.put("longitude", longitude.toString());
+                    return params;
+                }
+            };
+
+            // Añadir petición a la cola
+            requestQueue.add(request);
+
         }
 
     }

@@ -11,6 +11,7 @@ import com.android.app.slides.adapters.OptionsAdapter;
 import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.User;
 import com.android.app.slides.services.LocationService;
+import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
 
@@ -54,6 +55,9 @@ public class Home extends BaseActivity {
                         break;
 
                     case 1:
+                        intent = new Intent(Home.this, UserDetail.class);
+                        intent.putExtra("editMode", Constants.USER_EDIT_MODE);
+                        startActivity(intent);
                         break;
 
                     case 2:

@@ -77,6 +77,17 @@
                 android:value=".activities.Register" />
         </activity>
 
+        <activity
+            android:name=".activities.UserDetail"
+            android:label="Detalle Usuario"
+            android:parentActivityName=".activities.Home"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Home" />
+        </activity>
+
         <service android:name=".services.LocationService"/>
 
     </application>

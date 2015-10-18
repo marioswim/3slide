@@ -285,10 +285,10 @@ public class LocationService extends Service
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     // the POST parameters:
-                    // TODO: 17/10/15 Mandar el apikey si finalmente es necesario
                     DAOUser daoUser = new DAOUser(context);
                     User user = daoUser.loadUser();
 
+                    params.put("apikey", user.getApikey());
                     params.put("latitud", latitude.toString());
                     params.put("longitude", longitude.toString());
                     return params;

@@ -52,6 +52,8 @@ public class Utilities {
                 return "Dirección de email o contraseña incorrectas";
             case 2:
                 return "Dirección de email o contraseña incorrectas";
+            case 1062:
+                return "La dirección de email ya está registrada en el sistema";
             default:
                 return "Ha ocurrido un error, por favor inténtelo de nuevo más tarde";
         }

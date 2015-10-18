@@ -89,7 +89,7 @@ public class UserDetail extends BaseActivity {
         View.OnClickListener editListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.userNameConf:
                         DialogManager.showDialog(UserDetail.this, "Editar nombre", userName.getText().toString());
                         break;
@@ -107,11 +107,11 @@ public class UserDetail extends BaseActivity {
         return R.layout.user_detail;
     }
 
-    private void setUserInfo(){
+    private void setUserInfo() {
         DAOUser daoUser = new DAOUser(this);
         user = daoUser.loadUser();
 
-        if( user!= null){
+        if (user != null) {
             userName.setText(user.getName());
             userSector.setText(user.getSector());
             userTlf.setText(user.getPhone());
@@ -120,15 +120,15 @@ public class UserDetail extends BaseActivity {
         }
     }
 
-    private void checkEditMode(){
+    private void checkEditMode() {
         int editMode = getIntent().getExtras().getInt("editMode", Constants.USER_VIEW_MODE);
 
-        if(editMode == Constants.USER_EDIT_MODE){
+        if (editMode == Constants.USER_EDIT_MODE) {
             showEditOptions();
         }
     }
 
-    private void showEditOptions(){
+    private void showEditOptions() {
         userNameConf.setVisibility(View.VISIBLE);
         userSectorConf.setVisibility(View.VISIBLE);
         userTlfConf.setVisibility(View.VISIBLE);
@@ -137,7 +137,7 @@ public class UserDetail extends BaseActivity {
         saveBtn.setVisibility(View.VISIBLE);
     }
 
-    private void saveUserInfoServer(){
+    private void saveUserInfoServer() {
 
         Utilities.hideKeyboard(UserDetail.this);
 
@@ -161,10 +161,9 @@ public class UserDetail extends BaseActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 // the POST parameters:
+                params.put("apikey", user.getApikey());
                 params.put("nombre", userName.getText().toString());
                 params.put("descripcion", userDesc.getText().toString());
-                //// TODO: 17/10/15 comprobar si tiene que actualizarse el email
-                params.put("email", user.getEmail());
                 params.put("telefono", userTlf.getText().toString());
                 params.put("web", userWeb.getText().toString());
                 return params;

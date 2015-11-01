@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.User;
+import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.DialogManager;
 import com.android.app.slides.tools.ToastManager;
@@ -55,7 +56,6 @@ public class Register extends BaseActivity {
     @Bind(R.id.registerProgress)
     ProgressBarCircularIndeterminate registerProgress;
 
-    private RequestQueue requestQueue;
     public static String TAG = "Register";
 
 
@@ -90,8 +90,6 @@ public class Register extends BaseActivity {
                 }
             }
         });
-
-        requestQueue = Volley.newRequestQueue(this);
     }
 
     @Override
@@ -173,6 +171,7 @@ public class Register extends BaseActivity {
                                     Intent i = new Intent(Register.this, Home.class);
                                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.putExtra("firstTime", true);
                                     startActivity(i);
                                 }
                             }else{
@@ -218,14 +217,15 @@ public class Register extends BaseActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 // the POST parameters:
+                params.put("nombre", name.getText().toString());
                 params.put("email", email.getText().toString());
-                params.put("pass", password.getText().toString());
+                params.put("pass", Utilities.ofuscate(password.getText().toString()));
                 return params;
             }
         };
 
         // Añadir petición a la cola
-        requestQueue.add(request);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
 
     }
 

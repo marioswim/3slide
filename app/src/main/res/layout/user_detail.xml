@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,7 +36,7 @@
                     android:id="@+id/userImg"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/avatar1" />
 
                 <LinearLayout
                     android:id="@+id/userImgConf"
@@ -45,12 +46,11 @@
                     android:layout_gravity="bottom"
                     android:clickable="true">
 
-                    <ImageButton
+                    <com.mikepenz.iconics.view.IconicsImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="#00ffffff"
-                        android:scaleType="centerInside"
-                        android:src="@mipmap/ic_launcher" />
+                        app:iiv_color="@android:color/holo_red_dark"
+                        app:iiv_icon="gmd_edit" />
 
                 </LinearLayout>
 
@@ -208,13 +208,30 @@
                     android:layout_height="wrap_content"
                     android:text="Descripcion" />
 
+                <LinearLayout
+                    android:id="@+id/userDescConf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_toRightOf="@+id/titleDesc"
+                    android:clickable="true">
+
+                    <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="#00ffffff"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_launcher" />
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/userDesc"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/titleDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Descripcion skllakdn sakdnjsad  lskandkls sandkjnksa kndsjakndkjsand sajkdnjaks sakdnjsadkj jasknd ksadjkn ndsa klnasdklasnd" />
+                    android:text="" />
 
             </RelativeLayout>
 

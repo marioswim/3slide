@@ -15,10 +15,12 @@ import android.widget.TextView;
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.User;
+import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.DialogManager;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -64,42 +66,22 @@ public class UserDetail extends BaseActivity {
     LinearLayout userWebConf;
     @Bind(R.id.userImgConf)
     LinearLayout userImgConf;
+    @Bind(R.id.userDescConf)
+    LinearLayout userDescConf;
 
     @Bind(R.id.saveBtn)
     Button saveBtn;
 
     User user;
-    private RequestQueue requestQueue;
+    private boolean hasEdited = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        checkEditMode();
+        editMode();
 
         setUserInfo();
-
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveUserInfoServer();
-            }
-        });
-
-        View.OnClickListener editListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.userNameConf:
-                        DialogManager.showDialog(UserDetail.this, "Editar nombre", userName.getText().toString());
-                        break;
-                }
-            }
-        };
-
-        userNameConf.setOnClickListener(editListener);
-
-        requestQueue = Volley.newRequestQueue(this);
     }
 
     @Override
@@ -112,19 +94,73 @@ public class UserDetail extends BaseActivity {
         user = daoUser.loadUser();
 
         if (user != null) {
-            userName.setText(user.getName());
-            userSector.setText(user.getSector());
-            userTlf.setText(user.getPhone());
-            userDesc.setText(user.getDescription());
-            userWeb.setText(user.getWebsite());
+            if (!user.getName().isEmpty()) {
+                userName.setText(user.getName());
+            }
+            if (!user.getSector().getName().isEmpty()) {
+                userSector.setText(user.getSector().getName());
+            }
+            if (!user.getPhone().isEmpty()) {
+                userTlf.setText(user.getPhone());
+            }
+            if (!user.getWebsite().isEmpty()) {
+                userWeb.setText(user.getWebsite());
+            }
+            if (!user.getDescription().isEmpty()) {
+                userDesc.setText(user.getDescription());
+            }
+
         }
     }
 
-    private void checkEditMode() {
-        int editMode = getIntent().getExtras().getInt("editMode", Constants.USER_VIEW_MODE);
+    private void editMode() {
+        if (getIntent().getExtras() != null) {
+            int editMode = getIntent().getExtras().getInt("editMode", Constants.USER_VIEW_MODE);
 
-        if (editMode == Constants.USER_EDIT_MODE) {
-            showEditOptions();
+            if (editMode == Constants.USER_EDIT_MODE) {
+                showEditOptions();
+
+                saveBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (hasEdited) {
+                            saveUserInfoServer();
+                        } else {
+                            finish();
+                        }
+                    }
+                });
+
+                View.OnClickListener editListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.userNameConf:
+                                DialogManager.showDialog(UserDetail.this, "Editar nombre", userName.getText().toString());
+                                break;
+                            case R.id.userSectorConf:
+                                //Mostrar dialog con lista
+                                break;
+                            case R.id.userTlfConf:
+                                DialogManager.showDialog(UserDetail.this, "Editar teléfono", userTlf.getText().toString());
+                                break;
+                            case R.id.userWebConf:
+                                DialogManager.showDialog(UserDetail.this, "Editar website", userWeb.getText().toString());
+                                break;
+                            case R.id.userDescConf:
+                                DialogManager.showDialog(UserDetail.this, "Editar descripción", userDesc.getText().toString());
+                                break;
+                        }
+                        hasEdited = true;
+                    }
+                };
+
+                userNameConf.setOnClickListener(editListener);
+                userSectorConf.setOnClickListener(editListener);
+                userTlfConf.setOnClickListener(editListener);
+                userWebConf.setOnClickListener(editListener);
+                userDescConf.setOnClickListener(editListener);
+            }
         }
     }
 
@@ -161,17 +197,26 @@ public class UserDetail extends BaseActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 // the POST parameters:
-                params.put("apikey", user.getApikey());
                 params.put("nombre", userName.getText().toString());
                 params.put("descripcion", userDesc.getText().toString());
                 params.put("telefono", userTlf.getText().toString());
                 params.put("web", userWeb.getText().toString());
                 return params;
             }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("apikey", user.getApikey());
+
+                return params;
+            }
         };
 
         // Añadir petición a la cola
-        requestQueue.add(request);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
 
     }
 }

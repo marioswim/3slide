@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.android.app.slides.R;
 import com.android.app.slides.tools.Utilities;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 
 import butterknife.ButterKnife;
 
@@ -16,6 +18,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
+    public RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         loadToolbar();
         checkInternetConnection();
+        requestQueue = Volley.newRequestQueue(this);
     }
 
 

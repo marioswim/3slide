@@ -27,12 +27,16 @@ public class DAOUser {
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", user.getName());
-        editor.putString("sector", user.getSector());
+        if(user.getSector()!=null) {
+            editor.putInt("id_sector", user.getSector().getId());
+            editor.putString("sector", user.getSector().getName());
+        }
         editor.putString("phone", user.getPhone());
         editor.putString("email", user.getEmail());
         editor.putString("website", user.getWebsite());
         editor.putString("description", user.getDescription());
         editor.putString("image", user.getImage_url());
+        editor.putString("pdf", user.getPdf_url());
         editor.putString("apikey", user.getApikey());
         editor.commit();
     }
@@ -47,13 +51,15 @@ public class DAOUser {
             String name = settings.getString("name", null);
             if(name!=null){
                 String sector = settings.getString("sector", "");
+                int id_sector = settings.getInt("id_sector", -1);
                 String phone = settings.getString("phone", "");
                 String email = settings.getString("email", "");
                 String website = settings.getString("website", "");
                 String description = settings.getString("description", "");
                 String image = settings.getString("image", "");
+                String pdf = settings.getString("pdf", "");
                 String apikey = settings.getString("apikey", "");
-                u = new User(name, sector, phone, website, email, description, image, apikey);
+                u = new User(name, new Sector(id_sector, sector), phone, website, email, description, image, apikey, pdf);
                 return u;
             }
         }

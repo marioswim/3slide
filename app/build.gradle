@@ -40,4 +40,6 @@ dependencies {
         transitive = true
     }
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.mikepenz:iconics-core:1.7.9@aar'
+    compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
 }

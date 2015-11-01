@@ -11,7 +11,9 @@ import android.widget.EditText;
 
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOUser;
+import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
+import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
@@ -47,7 +49,6 @@ public class Login extends BaseActivity {
     @Bind(R.id.loginProgress)
     ProgressBarCircularIndeterminate loginProgress;
 
-    private RequestQueue requestQueue;
     public static String TAG = "Login";
 
 
@@ -77,8 +78,6 @@ public class Login extends BaseActivity {
                 startActivity(intent);
             }
         });
-
-        requestQueue = Volley.newRequestQueue(this);
 
     }
 
@@ -148,6 +147,7 @@ public class Login extends BaseActivity {
                                     Intent i = new Intent(Login.this, Home.class);
                                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.putExtra("firstTime", true);
                                     startActivity(i);
                                 }
                             }else{
@@ -194,18 +194,18 @@ public class Login extends BaseActivity {
                 Map<String, String> params = new HashMap<>();
                 // the POST parameters:
                 params.put("email", email.getText().toString());
-                params.put("pass", password.getText().toString());
+                params.put("pass", Utilities.ofuscate(password.getText().toString()));
                 return params;
             }
         };
 
         // Añadir petición a la cola
-        requestQueue.add(request);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     public User parseLogin(JSONObject jsonObject) {
 
-        String apikey, name, desc, phoneNumber, web;
+        String apikey, name, desc, phoneNumber, web, image_url, pdf_url, sector;
         User user = null;
 
         try {
@@ -235,6 +235,21 @@ public class Login extends BaseActivity {
             web = jsonObject.getString("web");
             if (web != null){
                 user.setWebsite(web);
+            }
+
+            image_url = jsonObject.getString("imagen");
+            if (image_url != null){
+                user.setImage_url(image_url);
+            }
+
+            pdf_url = jsonObject.getString("pdf");
+            if (pdf_url != null){
+                user.setPdf_url(pdf_url);
+            }
+
+            sector = jsonObject.getString("sector");
+            if (sector != null){
+                user.setSector(new Sector(jsonObject.getInt("id_sector"), sector));
             }
 
             user.setEmail(email.getText().toString());

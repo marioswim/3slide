@@ -6,12 +6,13 @@ package com.android.app.slides.model;
 public class User {
 
     private String name;
-    private String sector;
+    private Sector sector;
     private String phone;
     private String email;
     private String website;
     private String description;
     private String image_url;
+    private String pdf_url;
     private String apikey;
 
     public User() {
@@ -22,7 +23,7 @@ public class User {
         this.email = email;
     }
 
-    public User(String name, String sector, String phone, String website, String email, String description, String image_url, String apikey) {
+    public User(String name, Sector sector, String phone, String website, String email, String description, String image_url, String apikey, String pdf_url) {
         this.name = name;
         this.sector = sector;
         this.phone = phone;
@@ -30,6 +31,7 @@ public class User {
         this.email = email;
         this.description = description;
         this.image_url = image_url;
+        this.pdf_url = pdf_url;
         this.apikey = apikey;
     }
 
@@ -41,11 +43,11 @@ public class User {
         this.name = name;
     }
 
-    public String getSector() {
+    public Sector getSector() {
         return sector;
     }
 
-    public void setSector(String sector) {
+    public void setSector(Sector sector) {
         this.sector = sector;
     }
 
@@ -95,5 +97,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPdf_url() {
+        return pdf_url;
+    }
+
+    public void setPdf_url(String pdf_url) {
+        this.pdf_url = pdf_url;
     }
 }

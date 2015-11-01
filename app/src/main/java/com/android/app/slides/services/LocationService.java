@@ -17,10 +17,12 @@ import android.widget.Toast;
 import com.android.app.slides.activities.Home;
 import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.User;
+import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Configurations;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -243,7 +245,6 @@ public class LocationService extends Service
 
     public static class LocationReceiver extends BroadcastReceiver {
 
-        private RequestQueue requestQueue;
         Double latitude, longitude;
 
         @Override
@@ -252,8 +253,6 @@ public class LocationService extends Service
             latitude = intent.getDoubleExtra("Latitude", 0);
             longitude = intent.getDoubleExtra("Longitude", 0);
             String provider = intent.getStringExtra("Provider");
-
-            requestQueue = Volley.newRequestQueue(context);
 
             updateLocationServer(context);
 
@@ -285,18 +284,25 @@ public class LocationService extends Service
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     // the POST parameters:
+                    params.put("latitud", latitude.toString());
+                    params.put("longitud", longitude.toString());
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
                     DAOUser daoUser = new DAOUser(context);
                     User user = daoUser.loadUser();
 
+                    Map<String, String>  params = new HashMap<String, String>();
+
                     params.put("apikey", user.getApikey());
-                    params.put("latitud", latitude.toString());
-                    params.put("longitude", longitude.toString());
+
                     return params;
                 }
             };
 
-            // Añadir petición a la cola
-            requestQueue.add(request);
+            VolleySingleton.getInstance(context).addToRequestQueue(request);
 
         }
 

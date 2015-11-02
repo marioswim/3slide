@@ -36,7 +36,7 @@
                     android:id="@+id/userImg"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/avatar1" />
+                    android:src="@drawable/avatar" />
 
                 <LinearLayout
                     android:id="@+id/userImgConf"

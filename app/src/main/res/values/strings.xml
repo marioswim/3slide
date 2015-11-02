@@ -2,4 +2,6 @@
     <string name="app_name">3Slides</string>
     <string name="email">Email</string>
     <string name="password">Contraseña</string>
+    <string name="title_activity_search">Search</string>
+    <string name="action_search">Buscar</string>
 </resources>

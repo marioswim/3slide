@@ -77,7 +77,10 @@ public class Home extends BaseActivity {
                         break;
 
                     case 1:
+
                         //BUSQUEDA
+                        intent = new Intent(Home.this, Search.class);
+                        startActivity(intent);
                         break;
 
                     case 2:

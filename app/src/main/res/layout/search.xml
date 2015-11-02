@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_below="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/c1"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+
+                    android:id="@+id/wordKey"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:editable="true"
+                    android:enabled="true"
+                    android:hint="Palabra Clave"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="bottom"
+                    />
+                <EditText
+                    android:layout_below="@+id/wordKey"
+                    android:id="@+id/sector"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:enabled="true"
+                    android:editable="true"
+                    android:hint="Sector"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="bottom"
+                    />
+                <TextView
+                    android:layout_below="@+id/sector"
+                    android:id="@+id/m1"
+                    android:background="#000000"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:text="Distancia"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:layout_below="@+id/m1"
+                    android:id="@+id/m2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Selecciona a que distancia en kms quieres localizar a lo nuevos negocios."/>
+
+                <SeekBar
+                    android:layout_below="@id/m2"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/distance"
+                    android:max="50" />
+
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:layout_below="@+id/distance"
+                    android:layout_alignParentBottom="true"
+
+                    android:id="@+id/searchButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/accent"
+                    android:layout_marginTop="16dp"
+                    style="?android:textAppearanceSmall"
+                    android:text="@string/action_search" />
+            </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -4,15 +4,29 @@
     android:orientation="vertical" android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" tools:context=".Hall">
+    android:paddingTop="@dimen/activity_vertical_margin" tools:context=".Hall"
+    android:background="@color/primary">
 
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"/>
+
+    <ImageView
+        android:id="@+id/pasos"
+        android:layout_below="@+id/logoImg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pasos"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:text="@string/app_name"
+        android:layout_below="@id/pasos"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:layout_centerHorizontal="true"/>
+        android:text="Pre-alpha version"
+        android:textColor="@android:color/holo_red_dark"/>
 
     <RelativeLayout
         android:id="@+id/enterLayout"

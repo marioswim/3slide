@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo_no_text"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -41,12 +41,8 @@
         </activity>
         <activity
             android:name=".activities.Home"
-            android:label="@string/app_name"
-            android:parentActivityName=".activities.Hall"
+            android:label="Menu"
             android:windowSoftInputMode="adjustResize|stateHidden" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.Hall" />
         </activity>
         <activity
             android:name=".activities.Preferences"

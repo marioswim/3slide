@@ -12,8 +12,10 @@ public class Constants {
     public static String updateLocationURL = "/updateLocation";
     public static String recoverURL = "/recover";
     public static String sectorsURL = "/sectors";
+    public static String searchURL = "/search";
 
     public static String PREFS_NAME = "3slidesPrefs";
+    public static String PREFS_SECTORS_NAME = "3slidesPrefsSectors";
     public static String SALT = "8Nu240IY_eqEtteXaBzYbasQ3qo53fjI*UAWeMTfKU8whneT^X3q*Vj^z+PN";
 
     public static final int SERVICE_MODE_ONCE = 1;

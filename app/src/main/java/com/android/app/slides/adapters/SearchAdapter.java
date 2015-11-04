@@ -59,20 +59,24 @@ public class SearchAdapter extends BaseAdapter {
 
             nombre = (TextView) convertView.findViewById(R.id.nombre);
             sector = (TextView) convertView.findViewById(R.id.sector);
+            image = (ImageView) convertView.findViewById(R.id.imagen1);
 
 
             convertView.setTag(R.id.nombre, nombre);
             convertView.setTag(R.id.sector, sector);
+            convertView.setTag(R.id.imagen1, image);
 
         } else {
 
             nombre = (TextView) convertView.getTag(R.id.nombre);
             sector = (TextView) convertView.getTag(R.id.sector);
+            image = (ImageView) convertView.getTag(R.id.imagen1);
 
         }
 
         nombre.setText(entradas.get(position).getName());
         sector.setText(entradas.get(position).getSector().getName());
+        image.setImageResource(R.drawable.avatar);
 
         return convertView;
     }

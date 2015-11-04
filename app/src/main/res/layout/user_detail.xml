@@ -49,7 +49,7 @@
                     <com.mikepenz.iconics.view.IconicsImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        app:iiv_color="@android:color/holo_red_dark"
+                        app:iiv_color="@color/accent"
                         app:iiv_icon="gmd_edit" />
 
                 </LinearLayout>

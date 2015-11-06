@@ -29,7 +29,7 @@
 
                 <com.gc.materialdesign.views.ButtonRectangle
                     android:id="@+id/recoverBtn"
-                    style="?android:textAppearanceSmall"
+                    style="@style/AlertDialog.AppCompat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -38,6 +38,18 @@
 
             </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="521dp"
+        android:layout_marginStart="521dp"
+        android:layout_marginTop="79dp" />
 
 </RelativeLayout>
 

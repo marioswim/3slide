@@ -8,25 +8,21 @@
     android:background="@color/primary">
 
     <ImageView
-        android:id="@+id/logoImg"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"/>
+        android:id="@+id/imageView"
+        android:src="@drawable/ic_circulo_con_logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:id="@+id/pasos"
-        android:layout_below="@+id/logoImg"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/pasos"/>
-
-    <TextView
-        android:layout_below="@id/pasos"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="Pre-alpha version"
-        android:textColor="@android:color/holo_red_dark"/>
+        android:id="@+id/imageView2"
+        android:src="@drawable/pasos"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp" />
 
     <RelativeLayout
         android:id="@+id/enterLayout"
@@ -42,7 +38,7 @@
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/loginBtn"
                 android:layout_width="0dp"
-                style="?android:textAppearanceSmall"
+                style="@style/AlertDialog.AppCompat"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/accent"
@@ -51,11 +47,11 @@
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/registerBtn"
                 android:layout_width="0dp"
-                style="?android:textAppearanceSmall"
+                style="@style/AlertDialog.AppCompat"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/accent"
-                android:text="Registrarse" />
+                android:text="Crear Cuenta" />
         </LinearLayout>
     </RelativeLayout>
 

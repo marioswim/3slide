@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/accent"
                     android:layout_marginTop="16dp"
-                    style="?android:textAppearanceSmall"
+                    style="@style/AlertDialog.AppCompat"
                     android:text="@string/action_search" />
             </RelativeLayout>
 

@@ -3,15 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/primary"
     android:minHeight="@dimen/abc_action_bar_default_height_material"
     android:id="@+id/toolbar">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_gravity="right"
-        android:paddingRight="-50dp"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/logo_small"/>
 
 </android.support.v7.widget.Toolbar>

@@ -68,7 +68,7 @@ public class Register extends BaseActivity {
         termsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogManager.showDialog(Register.this, "Términos de usuario", "1- Blabla\n2- CLacla");
+                DialogManager.showDialog(Register.this, "Términos de usuario", "1- ....\n2- ....");
             }
         });
 
@@ -81,7 +81,7 @@ public class Register extends BaseActivity {
                     go = false;
                 }
                 if (!email.getText().toString().equals(email2.getText().toString())){
-                    email2.setError("No conciden los emails");
+                    email2.setError("No coinciden los emails");
                     go = false;
                 }
 

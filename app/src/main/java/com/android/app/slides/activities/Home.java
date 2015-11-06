@@ -146,24 +146,24 @@ public class Home extends BaseActivity {
 
     private List<String> initializeTitles(){
         List<String> titles = new ArrayList<>();
-        titles.add("PRESENTACIÓN");
-        titles.add("BÚSQUEDA");
-        titles.add("CONTACTOS");
-        titles.add("CHAT");
-        titles.add("GRUPOS");
-        titles.add("CONFIGURACIÓN");
+        titles.add("Presentación");
+        titles.add("Búsqueda");
+        titles.add("Contactos");
+        titles.add("Chat");
+        titles.add("Grupos");
+        titles.add("Mensajes");
 
         return titles;
     }
 
     private List<Integer> initializeImages(){
         List<Integer> images = new ArrayList<>();
-        images.add(R.drawable.ic_botn_presentacin_no_text);
-        images.add(R.drawable.ic_botn_busqueda_no_text);
-        images.add(R.drawable.ic_botn_contactos_no_text);
-        images.add(R.drawable.ic_botn_mensajes_no_text);
-        images.add(R.drawable.ic_botn_grupos_no_text);
-        images.add(R.mipmap.ic_launcher);
+        images.add(R.drawable.ic_botn_presentacin_no_text_down);
+        images.add(R.drawable.ic_botn_busqueda_no_text_down);
+        images.add(R.drawable.ic_botn_contactos_no_text_down);
+        images.add(R.drawable.ic_botn_chat_no_text_down);
+        images.add(R.drawable.ic_botn_grupos_no_text_down);
+        images.add(R.drawable.ic_botn_mensajes_no_text_down);
 
         return images;
     }

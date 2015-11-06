@@ -85,12 +85,12 @@
 
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/registerBtn"
-                style="?android:textAppearanceSmall"
+                style="@style/AlertDialog.AppCompat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/accent"
-                android:text="Registrarse" />
+                android:text="Crear Cuenta"/>
 
             <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
                 android:id="@+id/registerProgress"

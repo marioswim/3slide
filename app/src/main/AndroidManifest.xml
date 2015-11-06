@@ -80,9 +80,19 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity android:name=".activities.SearchResult"
-            android:label="Listado Empresas"
+            android:label="Empresas"
             android:parentActivityName=".activities.SearchResult"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+
+        <activity
+            android:name=".activities.Presentation"
+            android:label="Presentación"
+            android:parentActivityName=".activities.Home"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Home" />
         </activity>
     </application>
 

@@ -32,17 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/userNameConf"
+                android:layout_below="@+id/userImgConf"
                 android:layout_centerHorizontal="true">
-
-                <LinearLayout
-                    android:id="@+id/userImgConf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:layout_gravity="bottom"
-                    android:clickable="true">
-                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/userImg"
@@ -52,19 +43,30 @@
                     android:layout_below="@+id/userImgLayout"
                     android:layout_centerHorizontal="true" />
 
+
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     app:iiv_color="@color/accent"
                     app:iiv_icon="gmd_edit"
                     android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@+id/userImg"
-                    android:layout_toEndOf="@+id/userImg" />
+                    android:layout_toEndOf="@+id/userImg"
+                    android:layout_below="@+id/userImgLayout"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
             </LinearLayout>
 
 
 
+            <LinearLayout
+                android:id="@+id/userImgConf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_gravity="bottom"
+                android:clickable="true">
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/email_register_form"
@@ -79,7 +81,7 @@
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nombre de la empresa"
+                    android:hint="Nombre Empresa/Profesional"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -88,6 +90,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Sector"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/userEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -104,14 +114,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Website"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/userDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Descripción"
                     android:maxLines="1"
                     android:singleLine="true" />
 

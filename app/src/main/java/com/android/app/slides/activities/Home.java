@@ -81,6 +81,8 @@ public class Home extends BaseActivity {
                 switch (position) {
                     case 0:
                         //PRESENTACION
+                        intent = new Intent(Home.this,Presentation.class);
+                        startActivity(intent);
                         break;
 
                     case 1:

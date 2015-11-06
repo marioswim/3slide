@@ -51,7 +51,7 @@ public class UserDetail extends BaseActivity {
     TextView userTlf;
     @Bind(R.id.userWeb)
     TextView userWeb;
-    @Bind(R.id.userDesc)
+    @Bind(R.id.userEmail)
     TextView userDesc;
     @Bind(R.id.userImg)
     ImageView userImg;

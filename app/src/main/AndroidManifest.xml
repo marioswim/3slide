@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".activities.Login"
-            android:label="Iniciar Sesion"
+            android:label="Inicio"
             android:parentActivityName=".activities.Hall"
             android:windowSoftInputMode="adjustResize|stateHidden" >
             <meta-data
@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".activities.Register"
-            android:label="Registrarse"
+            android:label="Crear Cuenta"
             android:parentActivityName=".activities.Hall"
             android:windowSoftInputMode="adjustResize|stateHidden" >
             <meta-data
@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name=".activities.Home"
-            android:label="Menu"
+            android:label="Menú"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
@@ -75,7 +75,7 @@
         <service android:name=".services.LocationService" />
 
         <activity android:name=".activities.Search"
-            android:label="Buscar Empresas"
+            android:label="Búsqueda"
             android:parentActivityName=".activities.Search"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>

@@ -40,8 +40,7 @@ public class DAOSector {
 
     public ArrayList<Sector> loadSectors(){
 
-        SlidesApp app = new SlidesApp();
-        ArrayList<Sector> sectors = app.getSectors();
+        ArrayList<Sector> sectors = SlidesApp.getSectors();
 
         if(sectors!=null){
             return sectors;
@@ -58,5 +57,28 @@ public class DAOSector {
 
             return sectors;
         }
+    }
+
+    public static Sector getSectorByName(String name){
+        ArrayList<Sector> sectors = SlidesApp.getSectors();
+        for (Sector sector : sectors){
+            if(sector.getName().equalsIgnoreCase(name)){
+                return sector;
+            }
+        }
+        return null;
+    }
+
+    public static int getSectorIdByName(Context context,String name){
+        DAOSector daoSector = new DAOSector(context);
+        ArrayList<Sector> sectors = daoSector.loadSectors();
+
+        for (Sector sector : sectors){
+            if (sector.getName() == name){
+                return sector.getId();
+            }
+        }
+
+        return -1;
     }
 }

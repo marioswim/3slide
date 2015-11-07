@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOSector;
 import com.android.app.slides.model.Sector;
+import com.android.app.slides.tools.Utilities;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.views.Slider;
 
@@ -37,14 +38,16 @@ public class Search extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Search.this, SearchResult.class);
-                intent.putExtra("key", key.getText().toString());
-                if(sectorList.getItemAtPosition(sectorList.getSelectedItemPosition())!=null){
-                    intent.putExtra("sector", sectorList.getItemAtPosition(sectorList.getSelectedItemPosition()).toString());
-                }
-                intent.putExtra("distance", distance.getValue());
+                if(Utilities.isNetworkAvailable(Search.this)){
+                    Intent intent = new Intent(Search.this, SearchResult.class);
+                    intent.putExtra("key", key.getText().toString());
+                    if(sectorList.getItemAtPosition(sectorList.getSelectedItemPosition())!=null){
+                        intent.putExtra("sector", DAOSector.getSectorIdByName(Search.this, sectorList.getItemAtPosition(sectorList.getSelectedItemPosition()).toString()) + "");
+                    }
+                    intent.putExtra("distance", distance.getValue() + "");
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
             }
         });
 

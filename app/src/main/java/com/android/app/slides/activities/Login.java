@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOUser;
@@ -32,12 +33,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
 
-public class Login extends BaseActivity {
+public class Login extends BaseActivity implements BaseActivity.UIFont{
     @Bind(R.id.email)
     AutoCompleteTextView email;
     @Bind(R.id.password)
@@ -78,6 +80,9 @@ public class Login extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        // TODO: 7/11/15 La libreria peta al ponerle un typeface, comprobar 
+        //setFont2UI();
 
     }
 
@@ -207,6 +212,7 @@ public class Login extends BaseActivity {
 
         String apikey, name, desc, phoneNumber, web, image_url, pdf_url, sector;
         User user = null;
+        int id;
 
         try {
 
@@ -227,7 +233,7 @@ public class Login extends BaseActivity {
                 user.setDescription(desc);
             }
 
-            phoneNumber = jsonObject.getString("phoneNumber");
+            phoneNumber = jsonObject.getString("phonenumber");
             if (phoneNumber != null){
                 user.setPhone(phoneNumber);
             }
@@ -260,6 +266,12 @@ public class Login extends BaseActivity {
         }
 
         return user;
+    }
+
+    @Override
+    public void setFont2UI() {
+        sign_in_button.getTextView().setTypeface(Utilities.getNormalFont(Login.this));
+        forgotten.getTextView().setTypeface(Utilities.getLightFont(Login.this));
     }
 }
 

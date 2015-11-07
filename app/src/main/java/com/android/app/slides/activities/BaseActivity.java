@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 /**
  * Created by francisco on 23/9/15.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
 
     public Toolbar toolbar;
     public RequestQueue requestQueue;
@@ -53,5 +53,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             //Start hall with a bundle and a button to retry
             //Toast con button para reintentar
         }
+    }
+
+    public interface UIFont{
+        void setFont2UI();
     }
 }

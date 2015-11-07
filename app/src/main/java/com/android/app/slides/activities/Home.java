@@ -1,6 +1,7 @@
 package com.android.app.slides.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.app.slides.R;
 import com.android.app.slides.adapters.OptionsAdapter;
@@ -18,6 +21,7 @@ import com.android.app.slides.model.User;
 import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.services.LocationService;
 import com.android.app.slides.tools.Constants;
+import com.android.app.slides.tools.SlidesApp;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
 import com.android.volley.NetworkResponse;
@@ -25,6 +29,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -33,6 +38,7 @@ import com.mikepenz.iconics.view.IconicsImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -41,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by francisco on 26/9/15.
@@ -50,7 +57,14 @@ public class Home extends BaseActivity {
     RecyclerView mRecyclerView;
     @Bind(R.id.settings)
     IconicsImageView settings;
+    @Bind(R.id.profile_image)
+    CircleImageView profile_image;
+    @Bind(R.id.userName)
+    TextView userName;
+    @Bind(R.id.userSector)
+    TextView userSector;
 
+    User user;
     private OptionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static String TAG = "Home - Sectors";
@@ -113,7 +127,6 @@ public class Home extends BaseActivity {
             }
         });
 
-
         mRecyclerView.setAdapter(mAdapter);
 
         settings.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +144,7 @@ public class Home extends BaseActivity {
 
         checkSectors();
 
-        welcomeBackMsg();
+        setUserInfo();
 
 
     }
@@ -246,5 +259,39 @@ public class Home extends BaseActivity {
         }
 
         return sectors;
+    }
+
+    private void profileImageServer(){
+        // Retrieves an image specified by the URL, displays it in the UI.
+        ImageRequest request = new ImageRequest(user.getImage_url(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        if(bitmap!=null){
+                            profile_image.setImageBitmap(bitmap);
+                            SlidesApp app = new SlidesApp();
+                            app.setUserBitmap(bitmap);
+                        }
+                    }
+                }, 0, 0, null,
+                new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        profile_image.setImageResource(R.drawable.avatar);
+                    }
+                });
+        // Access the RequestQueue through your singleton class.
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+    private void setUserInfo(){
+        DAOUser daoUser = new DAOUser(Home.this);
+        user = daoUser.loadUser();
+
+        userName.setText(user.getName());
+        userSector.setText(user.getSector().getName());
+
+        if(!user.getImage_url().isEmpty()){
+            profileImageServer();
+        }
     }
 }

@@ -42,8 +42,7 @@ public class DAOUser {
     }
 
     public User loadUser(){
-        SlidesApp app = new SlidesApp();
-        User u = app.getUser();
+        User u = SlidesApp.getUser();
         if(u!=null){
             return u;
         }else{
@@ -57,6 +56,13 @@ public class DAOUser {
                 String website = settings.getString("website", "");
                 String description = settings.getString("description", "");
                 String image = settings.getString("image", "");
+
+                // TODO: 7/11/15 apacho, arreglar en el server
+                if(!image.isEmpty()){
+                    if(image.indexOf("http://")!=0){
+                        image = "http://" + image;
+                    }
+                }
                 String pdf = settings.getString("pdf", "");
                 String apikey = settings.getString("apikey", "");
                 u = new User(name, new Sector(id_sector, sector), phone, website, email, description, image, apikey, pdf);

@@ -5,6 +5,7 @@ package com.android.app.slides.model;
  */
 public class User {
 
+    private int id;
     private String name;
     private Sector sector;
     private String phone;
@@ -21,6 +22,19 @@ public class User {
     public User(String name, String email){
         this.name = name;
         this.email = email;
+    }
+
+    public User(int id, String name, Sector sector, String phone, String website, String email, String description, String image_url, String apikey, String pdf_url) {
+        this.id = id;
+        this.name = name;
+        this.sector = sector;
+        this.phone = phone;
+        this.website = website;
+        this.email = email;
+        this.description = description;
+        this.image_url = image_url;
+        this.pdf_url = pdf_url;
+        this.apikey = apikey;
     }
 
     public User(String name, Sector sector, String phone, String website, String email, String description, String image_url, String apikey, String pdf_url) {
@@ -105,5 +119,13 @@ public class User {
 
     public void setPdf_url(String pdf_url) {
         this.pdf_url = pdf_url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

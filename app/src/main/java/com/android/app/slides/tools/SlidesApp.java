@@ -1,6 +1,7 @@
 package com.android.app.slides.tools;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 
 import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
@@ -12,10 +13,11 @@ import java.util.ArrayList;
  */
 public class SlidesApp extends Application {
 
-    User user;
-    ArrayList<Sector> sectors;
+    private static User user;
+    private static ArrayList<Sector> sectors;
+    private static Bitmap userBitmap;
 
-    public User getUser() {
+    public static User getUser() {
         return user;
     }
 
@@ -23,11 +25,19 @@ public class SlidesApp extends Application {
         this.user = user;
     }
 
-    public ArrayList<Sector> getSectors() {
+    public static ArrayList<Sector> getSectors() {
         return sectors;
     }
 
     public void setSectors(ArrayList<Sector> sectors) {
         this.sectors = sectors;
+    }
+
+    public static Bitmap getUserBitmap() {
+        return userBitmap;
+    }
+
+    public void setUserBitmap(Bitmap userBitmap) {
+        this.userBitmap = userBitmap;
     }
 }

@@ -1,76 +1,90 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Home">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:paddingBottom="-16dp"
-        android:paddingLeft="-16dp"
-        android:paddingRight="-16dp"
-        android:paddingTop="-16dp"/>
+        layout="@layout/toolbar" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/avatar"
-        android:layout_marginTop="20dp"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_below="@+id/profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre empresa"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/userName"
-        android:text="Sector"/>
-
-    <com.mikepenz.iconics.view.IconicsImageView
-        android:id="@+id/settings"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        app:iiv_color="@color/accent"
-        app:iiv_icon="gmd_settings"
-        android:layout_alignBottom="@+id/profile_image"
-        android:layout_toRightOf="@+id/profile_image"
-        android:layout_toEndOf="@+id/profile_image" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
 
 
+            <RelativeLayout
+                android:id="@+id/user_form"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/avatar"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:id="@+id/optionList"
-            android:clickable="true"
-            android:scrollbars="vertical"/>
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_image"
+                    android:layout_centerHorizontal="true"
+                    android:text="Nombre empresa"
+                    android:textStyle="bold" />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/userSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/userName"
+                    android:layout_centerHorizontal="true"
+                    android:text="Sector" />
 
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/settings"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/profile_image"
+                    android:layout_toEndOf="@+id/profile_image"
+                    android:layout_toRightOf="@+id/profile_image"
+                    app:iiv_color="@color/accent"
+                    app:iiv_icon="gmd_settings" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_form">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/optionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:clickable="true"
+                    android:scrollbars="vertical" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
 </RelativeLayout>
 

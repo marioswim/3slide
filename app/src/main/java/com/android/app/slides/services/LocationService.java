@@ -226,13 +226,13 @@ public class LocationService extends Service
 
         public void onProviderDisabled(String provider)
         {
-            Toast.makeText(getApplicationContext(), provider + " Disabled", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), provider + " Disabled", Toast.LENGTH_SHORT).show();
         }
 
 
         public void onProviderEnabled(String provider)
         {
-            Toast.makeText( getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
+            //Toast.makeText( getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -256,7 +256,7 @@ public class LocationService extends Service
 
             updateLocationServer(context);
 
-            Toast.makeText(context, provider + latitude + longitude, Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, provider + latitude + longitude, Toast.LENGTH_LONG).show();
 
             if (mode == Constants.SERVICE_MODE_ONCE){
                 Intent explicitIntent = new Intent(context, LocationService.class);

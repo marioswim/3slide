@@ -6,18 +6,24 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.app.slides.R;
+import com.android.app.slides.model.DAOSector;
 import com.android.app.slides.model.DAOUser;
+import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
 import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.DialogManager;
+import com.android.app.slides.tools.SlidesApp;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
 import com.android.volley.AuthFailureError;
@@ -34,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,33 +51,22 @@ import butterknife.Bind;
  */
 public class UserDetail extends BaseActivity {
     @Bind(R.id.userName)
-    TextView userName;
+    EditText userName;
     @Bind(R.id.userSector)
-    TextView userSector;
+    Spinner userSector;
     @Bind(R.id.userTlf)
-    TextView userTlf;
+    EditText userTlf;
     @Bind(R.id.userWeb)
-    TextView userWeb;
+    EditText userWeb;
     @Bind(R.id.userEmail)
-    TextView userDesc;
+    EditText userEmail;
+    @Bind(R.id.userDesc)
+    EditText userDesc;
     @Bind(R.id.userImg)
     ImageView userImg;
 
-    @Bind(R.id.userNameConf)
-    LinearLayout userNameConf;
-    @Bind(R.id.userSectorConf)
-    LinearLayout userSectorConf;
-    @Bind(R.id.userTlfConf)
-    LinearLayout userTlfConf;
-    @Bind(R.id.userWebConf)
-    LinearLayout userWebConf;
-    @Bind(R.id.userImgConf)
-    LinearLayout userImgConf;
-    @Bind(R.id.userDescConf)
-    LinearLayout userDescConf;
-
     @Bind(R.id.saveBtn)
-    Button saveBtn;
+    ButtonRectangle saveBtn;
 
     User user;
     private boolean hasEdited = false;
@@ -97,9 +93,6 @@ public class UserDetail extends BaseActivity {
             if (!user.getName().isEmpty()) {
                 userName.setText(user.getName());
             }
-            if (!user.getSector().getName().isEmpty()) {
-                userSector.setText(user.getSector().getName());
-            }
             if (!user.getPhone().isEmpty()) {
                 userTlf.setText(user.getPhone());
             }
@@ -110,6 +103,26 @@ public class UserDetail extends BaseActivity {
                 userDesc.setText(user.getDescription());
             }
 
+            userEmail.setText(user.getEmail());
+
+            DAOSector daoSector = new DAOSector(UserDetail.this);
+            ArrayList<Sector> sectors = daoSector.loadSectors();
+            ArrayAdapter sectorAdapter = new ArrayAdapter(UserDetail.this, android.R.layout.simple_spinner_item);
+
+            for(Sector sector : sectors){
+                sectorAdapter.add(sector.getName());
+            }
+
+            userSector.setAdapter(sectorAdapter);
+
+            if (!user.getSector().getName().isEmpty()) {
+                int spinnerPosition3 = sectorAdapter.getPosition(user.getSector().getName());
+                userSector.setSelection(spinnerPosition3);
+            }
+
+            if(SlidesApp.getUserBitmap()!=null){
+                userImg.setImageBitmap(SlidesApp.getUserBitmap());
+            }
         }
     }
 
@@ -119,57 +132,56 @@ public class UserDetail extends BaseActivity {
 
             if (editMode == Constants.USER_EDIT_MODE) {
                 showEditOptions();
-
-                saveBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (hasEdited) {
-                            saveUserInfoServer();
-                        } else {
-                            finish();
-                        }
-                    }
-                });
-
-                View.OnClickListener editListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (v.getId()) {
-                            case R.id.userNameConf:
-                                DialogManager.showDialog(UserDetail.this, "Editar nombre", userName.getText().toString());
-                                break;
-                            case R.id.userSectorConf:
-                                //Mostrar dialog con lista
-                                break;
-                            case R.id.userTlfConf:
-                                DialogManager.showDialog(UserDetail.this, "Editar teléfono", userTlf.getText().toString());
-                                break;
-                            case R.id.userWebConf:
-                                DialogManager.showDialog(UserDetail.this, "Editar website", userWeb.getText().toString());
-                                break;
-                            case R.id.userDescConf:
-                                DialogManager.showDialog(UserDetail.this, "Editar descripción", userDesc.getText().toString());
-                                break;
-                        }
-                        hasEdited = true;
-                    }
-                };
-
-                userNameConf.setOnClickListener(editListener);
-                userSectorConf.setOnClickListener(editListener);
-                userTlfConf.setOnClickListener(editListener);
-                userWebConf.setOnClickListener(editListener);
-                userDescConf.setOnClickListener(editListener);
             }
+
+            saveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (hasEdited) {
+                        if (Utilities.isNetworkAvailable(UserDetail.this)) {
+                            saveUserInfoServer();
+
+                            //Save in local
+                            user.setName(userName.getText().toString());
+                            user.setDescription(userDesc.getText().toString());
+                            user.setPhone(userTlf.getText().toString());
+                            user.setWebsite(userWeb.getText().toString());
+                            DAOUser daoUser = new DAOUser(UserDetail.this);
+                            daoUser.saveUser(user);
+                        }
+                    } else {
+                        finish();
+                    }
+                }
+            });
         }
     }
 
     private void showEditOptions() {
-        userNameConf.setVisibility(View.VISIBLE);
-        userSectorConf.setVisibility(View.VISIBLE);
-        userTlfConf.setVisibility(View.VISIBLE);
-        userWebConf.setVisibility(View.VISIBLE);
-        userImgConf.setVisibility(View.VISIBLE);
+
+        TextWatcher tw = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hasEdited = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        userName.addTextChangedListener(tw);
+        userDesc.addTextChangedListener(tw);
+        userEmail.addTextChangedListener(tw);
+        userTlf.addTextChangedListener(tw);
+        userWeb.addTextChangedListener(tw);
+
         saveBtn.setVisibility(View.VISIBLE);
     }
 
@@ -201,6 +213,14 @@ public class UserDetail extends BaseActivity {
                 params.put("descripcion", userDesc.getText().toString());
                 params.put("telefono", userTlf.getText().toString());
                 params.put("web", userWeb.getText().toString());
+                // TODO: 7/11/15 el metodo getsectorbyname no funciona 
+                /*if(userSector.getItemAtPosition(userSector.getSelectedItemPosition())!=null){
+                    Sector sector = DAOSector.getSectorByName(userSector.getItemAtPosition(userSector.getSelectedItemPosition()).toString());
+                    if (sector!=null){
+                        params.put("id_sector", sector.getId() + "");
+                    }
+                }*/
+
                 return params;
             }
 

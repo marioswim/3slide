@@ -3,6 +3,7 @@ package com.android.app.slides.tools;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.View;
@@ -18,6 +19,8 @@ import java.security.NoSuchAlgorithmException;
  * Created by francisco on 24/9/15.
  */
 public class Utilities {
+
+    private static Typeface typeface;
 
     public static boolean isNetworkAvailable(Activity a) {
         Context context = a.getApplicationContext();
@@ -98,6 +101,21 @@ public class Utilities {
     }
 
     public static String ofuscate(String pass){
-        return Utilities.md5(pass + Constants.SALT) + ":" + Constants.SALT;
+        return Utilities.md5(pass);
+    }
+
+    private static Typeface getTypefaceAsset(Context context, String typefaceName) {
+        if (typeface == null) {
+            typeface = Typeface.createFromAsset(context.getAssets(), typefaceName);
+        }
+        return typeface;
+    }
+
+    public static Typeface getLightFont(Context context) {
+        return getTypefaceAsset(context, "light.ttf");
+    }
+
+    public static Typeface getNormalFont(Context context) {
+        return getTypefaceAsset(context, "normal.ttf");
     }
 }

@@ -177,8 +177,8 @@ public class Home extends BaseActivity {
         images.add(R.drawable.ic_botn_busqueda_no_text_down);
         images.add(R.drawable.ic_botn_contactos_no_text_down);
         images.add(R.drawable.ic_botn_chat_no_text_down);
-        images.add(R.drawable.ic_botn_grupos_no_text_down);
-        images.add(R.drawable.ic_botn_mensajes_no_text_down);
+        images.add(R.drawable.ic_botn_grupos_no_text_down2);
+        images.add(R.drawable.ic_botn_mensajes_no_text_down2);
 
         return images;
     }

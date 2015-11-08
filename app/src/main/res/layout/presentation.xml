@@ -34,22 +34,16 @@
                 android:layout_centerHorizontal="true">
 
 
-                <ImageView
-                    android:id="@+id/userImg"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
                     android:src="@drawable/avatar"
-                    android:layout_below="@+id/userImgLayout"
-                    android:layout_centerHorizontal="true" />
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
 
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:iiv_color="@color/accent"
-                    app:iiv_icon="gmd_edit"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@+id/userImg"
-                    android:layout_toEndOf="@+id/userImg" />
             </LinearLayout>
 
             <LinearLayout
@@ -61,27 +55,24 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true">
 
-                <EditText
+                <TextView
                     android:id="@+id/userName"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Nombre Empresa/Profesional"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:clickable="false"
-                    android:enabled="false"
-                    android:editable="false" />
+                    android:layout_below="@+id/profile_image"
+                    android:layout_centerHorizontal="true"
+                    android:text="Nombre empresa"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal" />
 
-                <EditText
+                <TextView
                     android:id="@+id/userSector"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Sector"
-                    android:maxLines="1"
-                    android:enabled="false"
-                    android:singleLine="true"
-                    android:clickable="false"
-                    android:editable="false" />
+                    android:layout_below="@id/userName"
+                    android:layout_centerHorizontal="true"
+                    android:text="Sector"
+                    android:layout_gravity="center_horizontal" />
 
 
                 <com.gc.materialdesign.views.ButtonRectangle

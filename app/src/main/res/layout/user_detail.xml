@@ -33,7 +33,7 @@
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/avatar"
-                app:civ_border_width="2dp"
+                app:civ_border_width="0dp"
                 app:civ_border_color="#FF000000"/>
 
             <LinearLayout
@@ -89,11 +89,11 @@
 
                 <EditText
                     android:id="@+id/userDesc"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Descripción"
-                    android:lines="3" />
+                    android:lines="2" />
 
             </LinearLayout>
 

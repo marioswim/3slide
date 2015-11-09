@@ -17,6 +17,9 @@ public class Constants {
     public static String PREFS_NAME = "3slidesPrefs";
     public static String PREFS_SECTORS_NAME = "3slidesPrefsSectors";
     public static String SALT = "8Nu240IY_eqEtteXaBzYbasQ3qo53fjI*UAWeMTfKU8whneT^X3q*Vj^z+PN";
+    public static String SERVER_PDFS_FOLDER = "pdfs";
+    public static String LOCAL_PDFS_FOLDER = "pdfs";
+
 
     public static final int SERVICE_MODE_ONCE = 1;
     public static final int SERVICE_MODE_FOREVER = 2;

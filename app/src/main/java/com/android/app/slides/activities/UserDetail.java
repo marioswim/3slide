@@ -146,6 +146,7 @@ public class UserDetail extends BaseActivity {
                             user.setDescription(userDesc.getText().toString());
                             user.setPhone(userTlf.getText().toString());
                             user.setWebsite(userWeb.getText().toString());
+                            user.setSector(DAOSector.getSectorByName(userSector.getItemAtPosition(userSector.getSelectedItemPosition()).toString()));
                             DAOUser daoUser = new DAOUser(UserDetail.this);
                             daoUser.saveUser(user);
                         }
@@ -213,13 +214,13 @@ public class UserDetail extends BaseActivity {
                 params.put("descripcion", userDesc.getText().toString());
                 params.put("telefono", userTlf.getText().toString());
                 params.put("web", userWeb.getText().toString());
-                // TODO: 7/11/15 el metodo getsectorbyname no funciona 
-                /*if(userSector.getItemAtPosition(userSector.getSelectedItemPosition())!=null){
+                // TODO: 7/11/15 el metodo getsectorbyname no funciona -- Descomentado por DM. Ahora si funciona.
+                if(userSector.getItemAtPosition(userSector.getSelectedItemPosition())!=null){
                     Sector sector = DAOSector.getSectorByName(userSector.getItemAtPosition(userSector.getSelectedItemPosition()).toString());
                     if (sector!=null){
                         params.put("id_sector", sector.getId() + "");
                     }
-                }*/
+                }
 
                 return params;
             }

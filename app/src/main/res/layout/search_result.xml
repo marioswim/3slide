@@ -11,10 +11,11 @@
         android:id="@+id/searchProgress"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="20dp"
         android:visibility="invisible"
         android:layout_gravity="center_horizontal"
-        android:background="@color/accent" />
+        android:background="@color/accent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
         <ListView
             android:layout_below="@+id/toolbar"

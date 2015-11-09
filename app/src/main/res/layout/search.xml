@@ -92,17 +92,10 @@
 
     <com.gc.materialdesign.views.ButtonRectangle
         android:id="@+id/searchButton"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/accent"
-        style="@style/AlertDialog.AppCompat"
-        android:text="@string/action_search"
-        android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-
+        android:text="@string/action_search"/>
 
 </RelativeLayout>

@@ -202,9 +202,10 @@ public class Home extends BaseActivity {
 
     public void checkSectors(){
         DAOSector daoSector = new DAOSector(Home.this);
-        if(daoSector.loadSectors().isEmpty()){
+        // Changed by DM. Update sector Always.
+        //if(daoSector.loadSectors().isEmpty()){
             sectorsServer();
-        }
+        //}
     }
 
     private void sectorsServer() {
@@ -293,5 +294,11 @@ public class Home extends BaseActivity {
         if(!user.getImage_url().isEmpty()){
             profileImageServer();
         }
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        setUserInfo();
     }
 }

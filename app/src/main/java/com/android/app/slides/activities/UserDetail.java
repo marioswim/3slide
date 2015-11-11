@@ -214,7 +214,7 @@ public class UserDetail extends BaseActivity {
                 params.put("descripcion", userDesc.getText().toString());
                 params.put("telefono", userTlf.getText().toString());
                 params.put("web", userWeb.getText().toString());
-                // TODO: 7/11/15 el metodo getsectorbyname no funciona -- Descomentado por DM. Ahora si funciona.
+                // TODO: 7/11/15 el metodo getsectorbyname no funciona -- Descomentado por DM. Ahora si funciona. Ver Home line 205.
                 if(userSector.getItemAtPosition(userSector.getSelectedItemPosition())!=null){
                     Sector sector = DAOSector.getSectorByName(userSector.getItemAtPosition(userSector.getSelectedItemPosition()).toString());
                     if (sector!=null){

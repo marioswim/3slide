@@ -131,7 +131,7 @@ public class Presentation extends BaseActivity {
     }
 
 
-    // TODO: 10/11/15 Codigo Duplicado en Presentation.java
+    // TODO: 10/11/15 Codigo Duplicado en SearchResultsDetails.java
 
     private class DownloadFile extends AsyncTask<String, Void, Void> {
 

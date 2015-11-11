@@ -88,7 +88,7 @@ public class Presentation extends BaseActivity {
                                 ToastManager.showToast(Presentation.this, "Uploading starting "+ uploadFilePath+uploadFileName);
                             }
                         });
-                        upLoadServerUri = Constants.baseUrl;
+                        upLoadServerUri = Constants.baseUrl + Constants.uploadPresentationURL;
 
                         uploadFile(uploadFilePath + "/" + uploadFileName);
 
@@ -216,6 +216,7 @@ public class Presentation extends BaseActivity {
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 conn.setRequestProperty("uploaded_file", fileName);
+                conn.setRequestProperty("apikey", user.getApikey());
 
                 dos = new DataOutputStream(conn.getOutputStream());
 

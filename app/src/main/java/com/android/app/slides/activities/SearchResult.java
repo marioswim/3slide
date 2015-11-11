@@ -1,5 +1,6 @@
 package com.android.app.slides.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.app.slides.R;
-import com.android.app.slides.adapters.OptionsAdapter;
 import com.android.app.slides.adapters.SearchAdapter;
 import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.Sector;
@@ -15,6 +15,7 @@ import com.android.app.slides.model.User;
 import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.ToastManager;
+import com.android.app.slides.tools.Utilities;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -93,6 +94,19 @@ public class SearchResult extends BaseActivity {
                                         User user = searchResult.get(position);
                                         // TODO: 6/11/15 pasarle todos los campos a la pantalla
                                         // donde se vea el perfil publico
+
+                                        if(Utilities.isNetworkAvailable(SearchResult.this)){
+                                            Intent intent = new Intent(SearchResult.this, SearchResultDetails.class);
+                                            intent.putExtra("name", user.getName());
+                                            intent.putExtra("sector", user.getSector().getName());
+                                            intent.putExtra("email", user.getEmail());
+                                            intent.putExtra("phonenumber", user.getPhone());
+                                            intent.putExtra("web", user.getWebsite());
+                                            intent.putExtra("desc", user.getDescription());
+                                            intent.putExtra("pdf", user.getPdf_url());
+                                            startActivity(intent);
+                                        }
+
                                     }
                                 });
 
@@ -202,10 +216,10 @@ public class SearchResult extends BaseActivity {
                 }
 
                 // TODO: 2/11/15 descomentar de que lo devuelva el servidor
-                //email = index.getString("email");
-                //if(email!=null){
-                //    user.setEmail(email);
-                //}
+                email = index.getString("email");
+                if(email!=null){
+                   user.setEmail(email);
+                }
 
                 searchResult.add(user);
             }

@@ -47,6 +47,12 @@ public class Presentation extends BaseActivity {
     TextView userName;
     @Bind(R.id.userSector)
     TextView userSector;
+    @Bind(R.id.userEmail)
+    TextView userEmail;
+    @Bind(R.id.userWeb)
+    TextView userWeb;
+    @Bind(R.id.userPhone)
+    TextView userPhone;
 
     User user;
 
@@ -111,15 +117,28 @@ public class Presentation extends BaseActivity {
             if (!user.getSector().getName().isEmpty()) {
                 userSector.setText(user.getSector().getName());
             }
+            if (!user.getEmail().isEmpty()) {
+                userEmail.setText(user.getEmail());
+            }
+            if (!user.getWebsite().isEmpty()) {
+                userWeb.setText(user.getWebsite());
+            }
+            if (!user.getPhone().isEmpty()) {
+                userPhone.setText(user.getPhone());
+            }
+
         }
     }
+
+
+    // TODO: 10/11/15 Codigo Duplicado en Presentation.java
 
     private class DownloadFile extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... strings) {
-            String fileUrl = strings[0];   // -> http://maven.apache.org/maven-1.x/maven.pdf
-            String fileName = strings[1];  // -> maven.pdf
+            String fileUrl = strings[0];
+            String fileName = strings[1];
             String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
             File folder = new File(extStorageDirectory, Constants.LOCAL_PDFS_FOLDER);
             folder.mkdir();

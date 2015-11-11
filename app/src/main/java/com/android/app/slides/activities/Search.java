@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOSector;
 import com.android.app.slides.model.Sector;
+import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.Utilities;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.views.Slider;
@@ -41,8 +42,11 @@ public class Search extends BaseActivity {
                 if(Utilities.isNetworkAvailable(Search.this)){
                     Intent intent = new Intent(Search.this, SearchResult.class);
                     intent.putExtra("key", key.getText().toString());
-                    if(sectorList.getItemAtPosition(sectorList.getSelectedItemPosition())!=null){
+                    if(sectorList.getItemAtPosition(sectorList.getSelectedItemPosition())!=null
+                            && !sectorList.getItemAtPosition(sectorList.getSelectedItemPosition()).toString().equalsIgnoreCase(Constants.ALL_SECTORS_NAME) ){
                         intent.putExtra("sector", DAOSector.getSectorIdByName(Search.this, sectorList.getItemAtPosition(sectorList.getSelectedItemPosition()).toString()) + "");
+                    }else{
+                        intent.putExtra("sector", Constants.ALL_SECTORS_ID + "");
                     }
                     intent.putExtra("distance", distance.getValue() + "");
 
@@ -58,6 +62,8 @@ public class Search extends BaseActivity {
         for(Sector sector : sectors){
             sectorAdapter.add(sector.getName());
         }
+
+        sectorAdapter.add(Constants.ALL_SECTORS_NAME);
 
         sectorList.setAdapter(sectorAdapter);
 

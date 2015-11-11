@@ -29,4 +29,7 @@ public class Constants {
 
     public static final int USER_VIEW_MODE = 0;
     public static final int USER_EDIT_MODE = 1;
+
+    public static final int ALL_SECTORS_ID = 1000;
+    public static final String ALL_SECTORS_NAME = "Todos";
 }

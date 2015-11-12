@@ -3,10 +3,12 @@ package com.android.app.slides.activities;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -90,7 +92,7 @@ public class Presentation extends BaseActivity {
                         });
                         upLoadServerUri = Constants.baseUrl + Constants.uploadPresentationURL;
 
-                        uploadFile(uploadFilePath + "/" + uploadFileName);
+                        int result = uploadFile(uploadFilePath + "/" + uploadFileName);
 
                     }
                 }).start();

@@ -14,6 +14,7 @@ public class Constants {
     public static String sectorsURL = "/sectors";
     public static String searchURL = "/search";
     public static String uploadPresentationURL = "/setPresentation";
+    public static String uploadImageURL = "/setImage";
 
     public static String PREFS_NAME = "3slidesPrefs";
     public static String PREFS_SECTORS_NAME = "3slidesPrefsSectors";

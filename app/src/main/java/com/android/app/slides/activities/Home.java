@@ -1,16 +1,25 @@
 package com.android.app.slides.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.app.slides.R;
 import com.android.app.slides.adapters.OptionsAdapter;
@@ -69,6 +78,13 @@ public class Home extends BaseActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     public static String TAG = "Home - Sectors";
 
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapterMenu;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.home;
@@ -78,8 +94,18 @@ public class Home extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(false);
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        addDrawerItems();
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
 
         mLayoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -108,20 +134,22 @@ public class Home extends BaseActivity {
 
                     case 2:
                         //CONTACTOS
+                        Toast.makeText(Home.this, "Disponible en la próxima versión", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
                         //CHAT
+                        Toast.makeText(Home.this, "Disponible en la próxima versión", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 4:
                         //GRUPOS
+                        Toast.makeText(Home.this, "Disponible sólo en la versión Premium", Toast.LENGTH_SHORT).show();
                         break;
 
                     case 5:
-                        //CONFIGURACION
-                        intent = new Intent(Home.this, Preferences.class);
-                        startActivity(intent);
+                        //MENSAJES
+                        Toast.makeText(Home.this, "Disponible sólo en la versión Premium", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -301,4 +329,105 @@ public class Home extends BaseActivity {
         super.onPostResume();
         setUserInfo();
     }
+
+    //Side Menu
+    private void addDrawerItems() {
+        String[] osArray = { "","Presentación", "Búsqueda", "Contactos", "Chat", "Grupos", "Mensajes", "Ajustes" };
+        mAdapterMenu = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapterMenu);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
+                switch (position) {
+                    case 1:
+                        //PRESENTACION
+                        intent = new Intent(Home.this, Presentation.class);
+                        startActivity(intent);
+                        break;
+
+                    case 2:
+
+                        //BUSQUEDA
+                        intent = new Intent(Home.this, Search.class);
+                        startActivity(intent);
+                        break;
+
+                    case 3:
+                        //CONTACTOS
+                        Toast.makeText(Home.this, "Disponible en la próxima versión", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 4:
+                        //CHAT
+                        Toast.makeText(Home.this, "Disponible en la próxima versión", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 5:
+                        //GRUPOS
+                        Toast.makeText(Home.this, "Disponible sólo en la versión Premium", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 6:
+                        //MENSAJES
+                        Toast.makeText(Home.this, "Disponible sólo en la versión Premium", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 7:
+                        //AJUSTES
+                        intent = new Intent(Home.this, Preferences.class);
+                        startActivity(intent);
+                        break;
+                }
+
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Menú");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
 }

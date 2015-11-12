@@ -7,16 +7,14 @@
 
     <ImageView
         android:id="@+id/TareaIcon"
-        android:layout_margin="1dp"
+        android:layout_margin="0dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_botn_presentacin_no_text_down"
-        />
+        android:src="@drawable/ic_botn_presentacin_no_text_down" />
     <TextView
         android:id="@+id/TareaName"
-        android:layout_margin="1dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PRESENTACIÓN"
@@ -27,6 +25,10 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         style="@style/AlertDialog.AppCompat"
-        android:allowUndo="false" />
+        android:allowUndo="false"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="20dp" />
 
 </RelativeLayout>

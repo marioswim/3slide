@@ -30,7 +30,7 @@ public class Preferences extends PreferenceActivity {
 
             switch (Configurations.getLocationModeId(Preferences.this)){
                 case 0:
-                    location.setSummary("Yes");
+                    location.setSummary("Si");
                     break;
                 case 1:
                     location.setSummary("No");
@@ -42,7 +42,7 @@ public class Preferences extends PreferenceActivity {
                 public boolean onPreferenceClick(Preference preference) {
 
                     ArrayList<String> options = new ArrayList<String>();
-                    options.add("Yes");
+                    options.add("Si");
                     options.add("No");
 
                     new MaterialDialog.Builder(Preferences.this)
@@ -60,7 +60,7 @@ public class Preferences extends PreferenceActivity {
                                     switch (which) {
                                         case 0:
                                             Configurations.saveLocationMode(Constants.SERVICE_MODE_FOREVER, Preferences.this);
-                                            reloadSummary("Yes", location);
+                                            reloadSummary("Si", location);
                                             break;
                                         case 1:
                                             Configurations.saveLocationMode(Constants.SERVICE_MODE_ONCE, Preferences.this);

@@ -8,7 +8,7 @@
         layout="@layout/toolbar" />
 
     <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-        android:id="@+id/searchProgress"
+        android:id="@+id/Progress"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:visibility="invisible"
@@ -19,7 +19,7 @@
 
         <ListView
             android:layout_below="@+id/toolbar"
-            android:id="@+id/search_list"
+            android:id="@+id/result_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbarStyle="outsideInset" />

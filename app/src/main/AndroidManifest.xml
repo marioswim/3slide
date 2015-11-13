@@ -83,9 +83,9 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
-            android:name=".activities.SearchResult"
+            android:name=".activities.SearchList"
             android:label="Empresas"
-            android:parentActivityName=".activities.SearchResult"
+            android:parentActivityName=".activities.SearchList"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity

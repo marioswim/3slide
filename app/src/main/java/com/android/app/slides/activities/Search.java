@@ -1,11 +1,9 @@
 package com.android.app.slides.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -40,7 +38,7 @@ public class Search extends BaseActivity {
             public void onClick(View v) {
 
                 if(Utilities.isNetworkAvailable(Search.this)){
-                    Intent intent = new Intent(Search.this, SearchResult.class);
+                    Intent intent = new Intent(Search.this, SearchList.class);
                     intent.putExtra("key", key.getText().toString());
                     if(sectorList.getItemAtPosition(sectorList.getSelectedItemPosition())!=null
                             && !sectorList.getItemAtPosition(sectorList.getSelectedItemPosition()).toString().equalsIgnoreCase(Constants.ALL_SECTORS_NAME) ){

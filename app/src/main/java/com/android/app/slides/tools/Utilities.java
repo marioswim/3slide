@@ -8,9 +8,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.app.slides.services.LocationService;
+import com.android.app.slides.tasks.DownloadImageTask;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -117,5 +119,13 @@ public class Utilities {
 
     public static Typeface getNormalFont(Context context) {
         return getTypefaceAsset(context, "normal.ttf");
+    }
+
+    public static void profileImageServer(String url, ImageView imageView, Context APPContext){
+        if(SlidesApp.getUserBitmap()!= null){
+            imageView.setImageBitmap(SlidesApp.getUserBitmap());
+        }else{
+            DownloadImageTask downloadImageTask = new DownloadImageTask(url, imageView, APPContext);
+        }
     }
 }

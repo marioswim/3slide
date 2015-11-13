@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.app.slides.R;
-import com.android.app.slides.adapters.SearchAdapter;
+import com.android.app.slides.adapters.UserAdapter;
 import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
@@ -36,41 +36,30 @@ import butterknife.Bind;
 /**
  * Created by Fran on 2/11/15.
  */
-public class SearchResult extends BaseActivity {
-    @Bind(R.id.search_list)
-    ListView searchList;
-    @Bind(R.id.searchProgress)
-    ProgressBarCircularIndeterminate searchProgress;
+public class ContactList extends BaseActivity {
+    @Bind(R.id.result_list)
+    ListView resultList;
+    @Bind(R.id.Progress)
+    ProgressBarCircularIndeterminate Progress;
 
-    //Search variables
-    String key;
-    String sector;
-    String distance;
-
-    public static String TAG = "Search Result";
+    public static String TAG = "Contact Result";
 
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.search_result;
+        return R.layout.result_list;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getIntent().getExtras()!=null){
-            key= getIntent().getExtras().getString("key");
-            sector = getIntent().getExtras().getString("sector");
-            distance = getIntent().getExtras().getString("distance");
-        }
-
         searchServer();
     }
 
     private void searchServer() {
 
-        searchProgress.setVisibility(View.VISIBLE);
+        Progress.setVisibility(View.VISIBLE);
 
         StringRequest request = new StringRequest(Request.Method.POST, Constants.baseUrl + Constants.searchURL,
                 new Response.Listener<String>() {
@@ -82,21 +71,19 @@ public class SearchResult extends BaseActivity {
 
                             if(jsonResponse != null){
 
-                                final ArrayList<User> searchResult = parseSearch(jsonResponse);
+                                final ArrayList<User> result = parseSearch(jsonResponse);
 
-                                SearchAdapter adapter=new SearchAdapter(SearchResult.this, searchResult);
+                                UserAdapter adapter=new UserAdapter(ContactList.this, result);
 
-                                searchList.setAdapter(adapter);
+                                resultList.setAdapter(adapter);
 
-                                searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        User user = searchResult.get(position);
-                                        // TODO: 6/11/15 pasarle todos los campos a la pantalla
-                                        // donde se vea el perfil publico
+                                        User user = result.get(position);
 
-                                        if(Utilities.isNetworkAvailable(SearchResult.this)){
-                                            Intent intent = new Intent(SearchResult.this, SearchResultDetails.class);
+                                        if(Utilities.isNetworkAvailable(ContactList.this)){
+                                            Intent intent = new Intent(ContactList.this, SearchResultDetails.class);
                                             intent.putExtra("name", user.getName());
                                             intent.putExtra("sector", user.getSector().getName());
                                             intent.putExtra("email", user.getEmail());
@@ -111,7 +98,7 @@ public class SearchResult extends BaseActivity {
                                 });
 
                             }else{
-                                ToastManager.showToast(SearchResult.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
+                                ToastManager.showToast(ContactList.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
                             }
 
 
@@ -119,16 +106,16 @@ public class SearchResult extends BaseActivity {
                             e.printStackTrace();
                         }
 
-                        searchProgress.setVisibility(View.INVISIBLE);
+                        Progress.setVisibility(View.INVISIBLE);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        ToastManager.showToast(SearchResult.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
+                        ToastManager.showToast(ContactList.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
 
-                        searchProgress.setVisibility(View.INVISIBLE);
+                        Progress.setVisibility(View.INVISIBLE);
 
                         finish();
 
@@ -140,9 +127,6 @@ public class SearchResult extends BaseActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 // the POST parameters:
-                params.put("nombre", key);
-                params.put("sector", sector);
-                params.put("distancia", distance);
                 return params;
             }
 
@@ -151,7 +135,7 @@ public class SearchResult extends BaseActivity {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                DAOUser daoUser = new DAOUser(SearchResult.this);
+                DAOUser daoUser = new DAOUser(ContactList.this);
                 User user = daoUser.loadUser();
 
                 params.put("apikey", user.getApikey());
@@ -214,11 +198,10 @@ public class SearchResult extends BaseActivity {
                 if (sector != null){
                     user.setSector(new Sector(index.getInt("id_sec"), sector));
                 }
-
-                // TODO: 2/11/15 descomentar de que lo devuelva el servidor
+                
                 email = index.getString("email");
                 if(email!=null){
-                   user.setEmail(email);
+                    user.setEmail(email);
                 }
 
                 searchResult.add(user);

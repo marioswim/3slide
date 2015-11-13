@@ -29,6 +29,7 @@ import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
 import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.services.LocationService;
+import com.android.app.slides.tasks.DownloadImageTask;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.SlidesApp;
 import com.android.app.slides.tools.ToastManager;
@@ -100,9 +101,6 @@ public class Home extends BaseActivity {
 
         addDrawerItems();
         setupDrawer();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
@@ -290,28 +288,6 @@ public class Home extends BaseActivity {
         return sectors;
     }
 
-    private void profileImageServer(){
-        // Retrieves an image specified by the URL, displays it in the UI.
-        ImageRequest request = new ImageRequest(user.getImage_url(),
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        if(bitmap!=null){
-                            profile_image.setImageBitmap(bitmap);
-                            SlidesApp app = new SlidesApp();
-                            app.setUserBitmap(bitmap);
-                        }
-                    }
-                }, 0, 0, null,
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        profile_image.setImageResource(R.drawable.avatar);
-                    }
-                });
-        // Access the RequestQueue through your singleton class.
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
-    }
-
     private void setUserInfo(){
         DAOUser daoUser = new DAOUser(Home.this);
         user = daoUser.loadUser();
@@ -320,7 +296,7 @@ public class Home extends BaseActivity {
         userSector.setText(user.getSector().getName());
 
         if(!user.getImage_url().isEmpty()){
-            profileImageServer();
+            Utilities.profileImageServer(user.getImage_url(), profile_image, getApplicationContext());
         }
     }
 

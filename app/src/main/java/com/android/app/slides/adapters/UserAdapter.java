@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by uni on 2/11/15.
  */
-public class SearchAdapter extends BaseAdapter {
+public class UserAdapter extends BaseAdapter {
 
     private ArrayList<User> entradas;
     private int R_layout_IdView;
@@ -24,7 +24,7 @@ public class SearchAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
 
-    public SearchAdapter(Context contexto, ArrayList<User> entradas) {
+    public UserAdapter(Context contexto, ArrayList<User> entradas) {
 
         this.contexto = contexto;
         this.entradas = entradas;

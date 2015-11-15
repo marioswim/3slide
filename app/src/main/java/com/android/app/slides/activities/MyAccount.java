@@ -1,31 +1,15 @@
 package com.android.app.slides.activities;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.app.slides.R;
 import com.android.app.slides.model.DAOSector;
@@ -33,37 +17,18 @@ import com.android.app.slides.model.DAOUser;
 import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
 import com.android.app.slides.model.VolleySingleton;
-import com.android.app.slides.tasks.DownloadImageTask;
 import com.android.app.slides.tasks.UploadImageTask;
 import com.android.app.slides.tools.Constants;
-import com.android.app.slides.tools.DialogManager;
-import com.android.app.slides.tools.RealPathUtil;
-import com.android.app.slides.tools.SlidesApp;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.annotation.Target;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +38,7 @@ import butterknife.Bind;
 /**
  * Created by francisco on 26/9/15.
  */
-public class UserDetail extends BaseActivity {
+public class MyAccount extends BaseActivity {
     @Bind(R.id.userName)
     EditText userName;
     @Bind(R.id.userSector)
@@ -92,6 +57,9 @@ public class UserDetail extends BaseActivity {
     @Bind(R.id.saveBtn)
     ButtonRectangle saveBtn;
 
+    @Bind(R.id.Progress)
+    ProgressBarCircularIndeterminate progress;
+
     User user;
     private boolean hasEdited = false;
     private final int REQ_UPLOAD_IMG = 1;
@@ -107,7 +75,7 @@ public class UserDetail extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.user_detail;
+        return R.layout.my_account;
     }
 
     private void setUserInfo() {
@@ -130,9 +98,9 @@ public class UserDetail extends BaseActivity {
 
             userEmail.setText(user.getEmail());
 
-            DAOSector daoSector = new DAOSector(UserDetail.this);
+            DAOSector daoSector = new DAOSector(MyAccount.this);
             ArrayList<Sector> sectors = daoSector.loadSectors();
-            ArrayAdapter sectorAdapter = new ArrayAdapter(UserDetail.this, android.R.layout.simple_spinner_item);
+            ArrayAdapter sectorAdapter = new ArrayAdapter(MyAccount.this, android.R.layout.simple_spinner_item);
 
             for(Sector sector : sectors){
                 sectorAdapter.add(sector.getName());
@@ -165,7 +133,7 @@ public class UserDetail extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     if (hasEdited) {
-                        if (Utilities.isNetworkAvailable(UserDetail.this)) {
+                        if (Utilities.isNetworkAvailable(MyAccount.this)) {
                             saveUserInfoServer();
 
                             //Save in local
@@ -174,7 +142,7 @@ public class UserDetail extends BaseActivity {
                             user.setPhone(userTlf.getText().toString());
                             user.setWebsite(userWeb.getText().toString());
                             user.setSector(DAOSector.getSectorByName(userSector.getItemAtPosition(userSector.getSelectedItemPosition()).toString()));
-                            DAOUser daoUser = new DAOUser(UserDetail.this);
+                            DAOUser daoUser = new DAOUser(MyAccount.this);
                             daoUser.saveUser(user);
                         }
                     } else {
@@ -227,7 +195,7 @@ public class UserDetail extends BaseActivity {
 
     private void saveUserInfoServer() {
 
-        Utilities.hideKeyboard(UserDetail.this);
+        Utilities.hideKeyboard(MyAccount.this);
 
         StringRequest request = new StringRequest(Request.Method.POST, Constants.baseUrl + Constants.updateProfileURL,
                 new Response.Listener<String>() {
@@ -241,7 +209,7 @@ public class UserDetail extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        ToastManager.showToast(UserDetail.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
+                        ToastManager.showToast(MyAccount.this, "Ha ocurrido un error, inténtelo de nuevo más tarde");
                     }
                 }
         ) {
@@ -282,7 +250,7 @@ public class UserDetail extends BaseActivity {
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
         if(reqCode == REQ_UPLOAD_IMG && resCode == Activity.RESULT_OK && data != null){
-            UploadImageTask uploadImageTask = new UploadImageTask(getApplicationContext(), data.getData(), user.getApikey());
+            UploadImageTask uploadImageTask = new UploadImageTask(MyAccount.this, data.getData(), user.getApikey(), progress);
             uploadImageTask.execute();
         }
     }

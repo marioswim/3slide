@@ -1,22 +1,16 @@
 package com.android.app.slides.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,32 +23,21 @@ import com.android.app.slides.model.Sector;
 import com.android.app.slides.model.User;
 import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.services.LocationService;
-import com.android.app.slides.tasks.DownloadImageTask;
 import com.android.app.slides.tools.Constants;
-import com.android.app.slides.tools.SlidesApp;
 import com.android.app.slides.tools.ToastManager;
 import com.android.app.slides.tools.Utilities;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -132,7 +115,8 @@ public class Home extends BaseActivity {
 
                     case 2:
                         //CONTACTOS
-                        Toast.makeText(Home.this, "Disponible en la próxima versión", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(Home.this, ContactList.class);
+                        startActivity(intent);
                         break;
 
                     case 3:
@@ -158,7 +142,7 @@ public class Home extends BaseActivity {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this, UserDetail.class);
+                Intent intent = new Intent(Home.this, MyAccount.class);
                 intent.putExtra("editMode", Constants.USER_EDIT_MODE);
                 startActivity(intent);
             }
@@ -332,7 +316,8 @@ public class Home extends BaseActivity {
 
                     case 3:
                         //CONTACTOS
-                        Toast.makeText(Home.this, "Disponible en la próxima versión", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(Home.this, ContactList.class);
+                        startActivity(intent);
                         break;
 
                     case 4:

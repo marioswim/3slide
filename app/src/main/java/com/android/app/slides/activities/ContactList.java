@@ -61,7 +61,7 @@ public class ContactList extends BaseActivity {
 
         Progress.setVisibility(View.VISIBLE);
 
-        StringRequest request = new StringRequest(Request.Method.POST, Constants.baseUrl + Constants.searchURL,
+        StringRequest request = new StringRequest(Request.Method.GET, Constants.baseUrl + Constants.getContactsURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -71,7 +71,7 @@ public class ContactList extends BaseActivity {
 
                             if(jsonResponse != null){
 
-                                final ArrayList<User> result = parseSearch(jsonResponse);
+                                final ArrayList<User> result = parseContacts(jsonResponse);
 
                                 UserAdapter adapter=new UserAdapter(ContactList.this, result);
 
@@ -80,10 +80,11 @@ public class ContactList extends BaseActivity {
                                 resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        User user = result.get(position);
+                                        /*User user = result.get(position);
 
                                         if(Utilities.isNetworkAvailable(ContactList.this)){
-                                            Intent intent = new Intent(ContactList.this, SearchResultDetails.class);
+                                            Intent intent = new Intent(ContactList.this, UserDetails.class);
+                                            intent.putExtra("id_emp", user.getId());
                                             intent.putExtra("name", user.getName());
                                             intent.putExtra("sector", user.getSector().getName());
                                             intent.putExtra("email", user.getEmail());
@@ -91,8 +92,9 @@ public class ContactList extends BaseActivity {
                                             intent.putExtra("web", user.getWebsite());
                                             intent.putExtra("desc", user.getDescription());
                                             intent.putExtra("pdf", user.getPdf_url());
+                                            intent.putExtra("image", user.getImage_url());
                                             startActivity(intent);
-                                        }
+                                        }*/
 
                                     }
                                 });
@@ -148,40 +150,25 @@ public class ContactList extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
-    public ArrayList<User> parseSearch(JSONObject jsonObject) {
-        ArrayList<User> searchResult = new ArrayList<>();
+    public ArrayList<User> parseContacts(JSONObject jsonObject) {
+        ArrayList<User> contactsResult = new ArrayList<>();
         String email, name, desc, phoneNumber, web, image_url, pdf_url, sector;
         int id;
 
         try {
 
-            JSONArray sectorsArray = jsonObject.getJSONArray("empresas");
+            JSONArray sectorsArray = jsonObject.getJSONArray("contactos");
 
             for (int i =0; i < sectorsArray.length(); i++){
                 JSONObject index = sectorsArray.getJSONObject(i);
                 User user = new User();
 
-                id= index.getInt("id_emp");
+                id= index.getInt("id");
                 user.setId(id);
 
-                name = index.getString("name");
+                name = index.getString("nombre");
                 if (name != null){
                     user.setName(name);
-                }
-
-                desc = index.getString("desc");
-                if (desc != null){
-                    user.setDescription(desc);
-                }
-
-                phoneNumber = index.getString("phonenumber");
-                if (phoneNumber != null){
-                    user.setPhone(phoneNumber);
-                }
-
-                web = index.getString("web");
-                if (web != null){
-                    user.setWebsite(web);
                 }
 
                 image_url = index.getString("imagen");
@@ -189,22 +176,7 @@ public class ContactList extends BaseActivity {
                     user.setImage_url(image_url);
                 }
 
-                pdf_url = index.getString("pdf");
-                if (pdf_url != null){
-                    user.setPdf_url(pdf_url);
-                }
-
-                sector = index.getString("sector");
-                if (sector != null){
-                    user.setSector(new Sector(index.getInt("id_sec"), sector));
-                }
-                
-                email = index.getString("email");
-                if(email!=null){
-                    user.setEmail(email);
-                }
-
-                searchResult.add(user);
+                contactsResult.add(user);
             }
 
 
@@ -212,6 +184,6 @@ public class ContactList extends BaseActivity {
             Log.e(TAG, "Error de parsing: " + e.getMessage());
         }
 
-        return searchResult;
+        return contactsResult;
     }
 }

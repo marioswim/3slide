@@ -2,20 +2,44 @@ package com.android.app.slides.tasks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.android.app.slides.activities.Home;
+import com.android.app.slides.model.DAOSector;
+import com.android.app.slides.model.DAOUser;
+import com.android.app.slides.model.Sector;
+import com.android.app.slides.model.User;
+import com.android.app.slides.model.VolleySingleton;
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.RealPathUtil;
+import com.android.app.slides.tools.SlidesApp;
 import com.android.app.slides.tools.ToastManager;
+import com.android.app.slides.tools.Utilities;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by francisco on 13/11/15.
@@ -28,16 +52,20 @@ public class UploadImageTask extends AsyncTask<Void, Void, Void> {
     String upLoadUrl;
     Context context;
     String apikey;
+    ProgressBarCircularIndeterminate progress;
 
-    public UploadImageTask (Context context, Uri uri, String apikey){
+
+    public UploadImageTask (Context context, Uri uri, String apikey, ProgressBarCircularIndeterminate progress){
         this.context = context;
         this.uploadUri = uri;
         this.upLoadUrl = Constants.baseUrl + Constants.uploadImageURL;
         this.apikey = apikey;
+        this.progress = progress;
     }
 
     @Override
     protected void onPreExecute() {
+        this.progress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -54,13 +82,18 @@ public class UploadImageTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void unused) {
         if(serverResponseCode == 200){
             ToastManager.showToast((Activity) context, "Subido correctamente");
+            loginServer();
+            SlidesApp app = new SlidesApp();
+            app.setUserBitmap(null);
         }else{
             ToastManager.showToast((Activity) context, "Ha ocurrido un error, intentelo mas tarde");
         }
+        this.progress.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void onCancelled() {
+        this.progress.setVisibility(View.INVISIBLE);
     }
 
     public int uploadImg(String sourceFileUri) {
@@ -153,5 +186,130 @@ public class UploadImageTask extends AsyncTask<Void, Void, Void> {
             return serverResponseCode;
 
         }
+    }
+
+    private void loginServer() {
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, Constants.baseUrl + Constants.loginURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+
+                            if(jsonResponse != null){
+                                User user = parseLogin(jsonResponse);
+
+                                if (user != null) {
+                                    DAOUser daoUser = new DAOUser(context);
+                                    daoUser.saveUser(user);
+                                }
+                            }else{
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null) {
+                            if (networkResponse.statusCode == 500){
+                                try {
+                                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                                    JSONObject jsonObject = new JSONObject(responseBody);
+                                    if (jsonObject!=null){
+                                        int errorNo = jsonObject.getInt("errno");
+                                    }
+
+                                } catch (JSONException | UnsupportedEncodingException e) {
+                                }
+                            }else{
+                            }
+                        }
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                SharedPreferences settings = context.getSharedPreferences("Chapuza", 0);
+                String name = settings.getString("name", null);
+                params.put("email", settings.getString("email", ""));
+                params.put("pass", Utilities.ofuscate(settings.getString("pass", "")));
+                return params;
+            }
+        };
+
+        // Añadir petición a la cola
+        VolleySingleton.getInstance(context.getApplicationContext()).addToRequestQueue(request);
+    }
+
+    public User parseLogin(JSONObject jsonObject) {
+
+        String apikey, name, desc, phoneNumber, web, image_url, pdf_url, sector;
+        User user = null;
+        int id;
+
+        try {
+
+            user = new User();
+
+            apikey = jsonObject.getString("apikey");
+            if (apikey != null){
+                user.setApikey(apikey);
+            }
+
+            name = jsonObject.getString("name");
+            if (name != null){
+                user.setName(name);
+            }
+
+            desc = jsonObject.getString("desc");
+            if (desc != null){
+                user.setDescription(desc);
+            }
+
+            phoneNumber = jsonObject.getString("phonenumber");
+            if (phoneNumber != null){
+                user.setPhone(phoneNumber);
+            }
+
+            web = jsonObject.getString("web");
+            if (web != null){
+                user.setWebsite(web);
+            }
+
+            image_url = jsonObject.getString("imagen");
+            if (image_url != null){
+                user.setImage_url(image_url);
+            }
+
+            pdf_url = jsonObject.getString("pdf");
+            if (pdf_url != null){
+                user.setPdf_url(pdf_url);
+            }
+
+            sector = jsonObject.getString("sector");
+            if (sector != null){
+                user.setSector(new Sector(jsonObject.getInt("id_sector"), sector));
+            }
+
+            SharedPreferences settings = context.getSharedPreferences("Chapuza", 0);
+            user.setEmail(settings.getString("email", ""));
+
+
+        } catch (JSONException e) {
+        }
+
+        return user;
     }
 }

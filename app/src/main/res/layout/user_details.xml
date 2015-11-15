@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/saveBtn"
+        android:layout_above="@+id/actionsLayout"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -31,7 +31,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/userNameConf"
                 android:layout_centerHorizontal="true">
 
 
@@ -55,13 +54,11 @@
                 android:layout_below="@+id/userImgLayout"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true">
-                android:layout_alignParentStart="true">
 
                 <TextView
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profile_image"
                     android:layout_centerHorizontal="true"
                     android:text="Nombre empresa"
                     android:textStyle="bold"
@@ -72,7 +69,6 @@
                     android:id="@+id/userSector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Sector"
                     android:layout_gravity="center_horizontal"
@@ -82,7 +78,6 @@
                     android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Email"
                     android:layout_gravity="center_horizontal"
@@ -92,7 +87,6 @@
                     android:id="@+id/userPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Phone"
                     android:layout_gravity="center_horizontal" />
@@ -101,7 +95,6 @@
                     android:id="@+id/userWeb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Web"
                     android:layout_gravity="center_horizontal" />
@@ -110,7 +103,6 @@
                     android:id="@+id/userDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Descripción"
                     android:layout_gravity="left|center_horizontal"
@@ -118,28 +110,59 @@
                     android:layout_marginTop="8pt"
                     android:layout_marginRight="3pt" />
 
+                <com.gc.materialdesign.views.ButtonRectangle
+                    android:id="@+id/DownloadPptBtn2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/accent"
+                    android:text="Ver Presentación" />
+
             </LinearLayout>
 
         </RelativeLayout>
 
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/buttoms"
+    <FrameLayout
+        android:id="@+id/actionsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/negro"
+        android:layout_alignParentBottom="true">
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
 
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:id="@+id/DownloadPptBtn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/accent"
-        android:text="Ver Presentación"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <ImageButton
+                android:id="@+id/actionCall"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_botn_aadir"/>
+
+            <ImageButton
+                android:id="@+id/actionMail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_botn_aadir"/>
+
+            <ImageButton
+                android:id="@+id/actionFriend"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_botn_aadir"/>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
 
 </RelativeLayout>

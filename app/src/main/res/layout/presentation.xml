@@ -30,9 +30,7 @@
                 android:id="@+id/userImgLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/userNameConf"
-                android:layout_centerHorizontal="true">
+                android:orientation="horizontal" android:layout_centerHorizontal="true">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -47,6 +45,15 @@
 
             </LinearLayout>
 
+            <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+                android:id="@+id/Progress"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="20dp"
+                android:visibility="invisible"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/accent" />
+
             <LinearLayout
                 android:id="@+id/email_register_form"
                 android:layout_width="match_parent"
@@ -60,7 +67,6 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profile_image"
                     android:layout_centerHorizontal="true"
                     android:text="Nombre empresa"
                     android:textStyle="bold"
@@ -71,7 +77,6 @@
                     android:id="@+id/userSector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Sector"
                     android:layout_gravity="center_horizontal"
@@ -81,7 +86,6 @@
                     android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Email"
                     android:layout_gravity="center_horizontal"
@@ -100,7 +104,6 @@
                     android:id="@+id/userWeb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     android:text="Web"
                     android:layout_gravity="center_horizontal" />

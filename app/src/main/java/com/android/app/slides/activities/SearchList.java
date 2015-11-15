@@ -96,7 +96,8 @@ public class SearchList extends BaseActivity {
                                         // donde se vea el perfil publico
 
                                         if(Utilities.isNetworkAvailable(SearchList.this)){
-                                            Intent intent = new Intent(SearchList.this, SearchResultDetails.class);
+                                            Intent intent = new Intent(SearchList.this, UserDetails.class);
+                                            intent.putExtra("id_emp", user.getId());
                                             intent.putExtra("name", user.getName());
                                             intent.putExtra("sector", user.getSector().getName());
                                             intent.putExtra("email", user.getEmail());

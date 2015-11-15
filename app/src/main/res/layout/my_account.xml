@@ -103,6 +103,16 @@
 
     </ScrollView>
 
+    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+        android:id="@+id/Progress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/accent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
     <com.gc.materialdesign.views.ButtonRectangle
         android:id="@+id/saveBtn"
         android:layout_width="fill_parent"

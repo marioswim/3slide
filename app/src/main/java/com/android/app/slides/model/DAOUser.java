@@ -27,6 +27,7 @@ public class DAOUser {
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("name", user.getName());
+        editor.putInt("id_emp", user.getId());
         if(user.getSector()!=null) {
             editor.putInt("id_sector", user.getSector().getId());
             editor.putString("sector", user.getSector().getName());
@@ -49,6 +50,7 @@ public class DAOUser {
             SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, 0);
             String name = settings.getString("name", null);
             if(name!=null){
+                int id = settings.getInt("id_emp", -1);
                 String sector = settings.getString("sector", "");
                 int id_sector = settings.getInt("id_sector", -1);
                 String phone = settings.getString("phone", "");
@@ -65,7 +67,7 @@ public class DAOUser {
                 }
                 String pdf = settings.getString("pdf", "");
                 String apikey = settings.getString("apikey", "");
-                u = new User(name, new Sector(id_sector, sector), phone, website, email, description, image, apikey, pdf);
+                u = new User(id, name, new Sector(id_sector, sector), phone, website, email, description, image, apikey, pdf);
                 return u;
             }
         }

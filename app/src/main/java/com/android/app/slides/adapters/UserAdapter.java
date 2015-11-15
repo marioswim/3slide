@@ -75,7 +75,9 @@ public class UserAdapter extends BaseAdapter {
         }
 
         nombre.setText(entradas.get(position).getName());
-        sector.setText(entradas.get(position).getSector().getName());
+        if(entradas.get(position).getSector()!=null){
+            sector.setText(entradas.get(position).getSector().getName());
+        }
         image.setImageResource(R.drawable.avatar);
 
         return convertView;

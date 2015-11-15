@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.view.View;
 
 import com.android.app.slides.tools.Constants;
 import com.android.app.slides.tools.RealPathUtil;
 import com.android.app.slides.tools.ToastManager;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -26,16 +28,19 @@ public class UploadPdfTask extends AsyncTask<Void, Void, Void> {
     String upLoadUrl;
     Context context;
     String apikey;
+    ProgressBarCircularIndeterminate progress;
 
-    public UploadPdfTask (Context context, Uri uri, String apikey){
+    public UploadPdfTask (Context context, Uri uri, String apikey, ProgressBarCircularIndeterminate progress){
         this.context = context;
         this.uploadUri = uri;
         this.upLoadUrl = Constants.baseUrl + Constants.uploadPresentationURL;
         this.apikey = apikey;
+        this.progress = progress;
     }
 
     @Override
     protected void onPreExecute() {
+        this.progress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -43,7 +48,7 @@ public class UploadPdfTask extends AsyncTask<Void, Void, Void> {
 
         final String realPath= RealPathUtil.getPath(context, uploadUri);
 
-        uploadImg(realPath);
+        uploadPdf(realPath);
 
         return (null);
     }
@@ -55,14 +60,15 @@ public class UploadPdfTask extends AsyncTask<Void, Void, Void> {
         }else{
             ToastManager.showToast((Activity) context, "Ha ocurrido un error, intentelo mas tarde");
         }
+        this.progress.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void onCancelled() {
+        this.progress.setVisibility(View.INVISIBLE);
     }
 
-    public int uploadImg(String sourceFileUri) {
-
+    public int uploadPdf(String sourceFileUri) {
 
         String fileName = sourceFileUri;
 
@@ -130,6 +136,7 @@ public class UploadPdfTask extends AsyncTask<Void, Void, Void> {
 
                 // Responses from the server (code and message)
                 serverResponseCode = conn.getResponseCode();
+                String responsee = conn.getResponseMessage();
 
                 //close the streams //
                 fileInputStream.close();

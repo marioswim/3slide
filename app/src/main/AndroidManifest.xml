@@ -65,7 +65,7 @@
                 android:value=".activities.Register" />
         </activity>
         <activity
-            android:name=".activities.UserDetail"
+            android:name=".activities.MyAccount"
             android:label="Detalle Usuario"
             android:parentActivityName=".activities.Home"
             android:windowSoftInputMode="adjustResize|stateHidden" >
@@ -79,24 +79,38 @@
         <activity
             android:name=".activities.Search"
             android:label="Búsqueda"
-            android:parentActivityName=".activities.Search"
+            android:parentActivityName=".activities.Home"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Home" />
         </activity>
         <activity
             android:name=".activities.SearchList"
             android:label="Empresas"
-            android:parentActivityName=".activities.SearchList"
+            android:parentActivityName=".activities.Search"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
-            android:name=".activities.SearchResultDetails"
+            android:name=".activities.UserDetails"
             android:label="Detalles"
-            android:parentActivityName=".activities.SearchResultDetails"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.SearchList" />
         </activity>
         <activity
             android:name=".activities.Presentation"
             android:label="Presentación"
+            android:parentActivityName=".activities.Home"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.Home" />
+        </activity>
+        <activity
+            android:name=".activities.ContactList"
+            android:label="Empresas"
             android:parentActivityName=".activities.Home"
             android:windowSoftInputMode="adjustResize|stateHidden" >
             <meta-data

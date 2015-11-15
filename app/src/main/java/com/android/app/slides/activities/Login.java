@@ -1,6 +1,7 @@
 package com.android.app.slides.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -65,6 +66,11 @@ public class Login extends BaseActivity implements BaseActivity.UIFont{
             public void onClick(View v) {
 
                 if (Utilities.isEmailValid(email.getText().toString())) {
+                    SharedPreferences settings = getSharedPreferences("Chapuza", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("mail", email.getText().toString());
+                    editor.putString("pass", password.getText().toString());
+                    editor.commit();
                     loginServer();
                 } else {
                     email.setError("Email no válido");

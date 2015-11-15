@@ -3,9 +3,11 @@ package com.android.app.slides.tools;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -126,6 +128,20 @@ public class Utilities {
             imageView.setImageBitmap(SlidesApp.getUserBitmap());
         }else{
             DownloadImageTask downloadImageTask = new DownloadImageTask(url, imageView, APPContext);
+            downloadImageTask.execute();
         }
+    }
+
+    public static void makeCall(Context context, String phoneNumber){
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+        context.startActivity(intent);
+    }
+
+    public static void makeEmail(Context context, String email, String userName){
+        Intent itSend = new Intent(Intent.ACTION_SEND);
+        itSend.setType("text/plain");
+        itSend.putExtra(android.content.Intent.EXTRA_EMAIL, email);
+        itSend.putExtra(Intent.EXTRA_SUBJECT, "Mensaje de " + userName + " - 3Slides");
+        context.startActivity(Intent.createChooser(itSend, "Selecciona una aplicación"));
     }
 }

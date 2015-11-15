@@ -30,6 +30,7 @@ public class Hall extends BaseActivity {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
+
         }else{
             enterLayout.setVisibility(View.VISIBLE);
 
